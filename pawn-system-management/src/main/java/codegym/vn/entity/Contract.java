@@ -18,6 +18,7 @@ public class Contract {
     private Date liquidationDate;
     private Date startDate;
     private Date endDate;
+    private Integer quantity;
 
     @ManyToOne(targetEntity = StatusContract.class)
     @JoinColumn(name = "status_contract_id", referencedColumnName = "statusContractId")
@@ -112,6 +113,14 @@ public class Contract {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public StatusContract getStatusContract() {
