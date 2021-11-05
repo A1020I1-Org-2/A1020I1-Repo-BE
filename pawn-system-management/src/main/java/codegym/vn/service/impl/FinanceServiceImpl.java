@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FinanceServiceImpl implements FinanceService {
 
-//    @Autowired
-//    FinanceRepository financeRepository;
-//    @Override
-//    public Finance findAllFinance(int i) {
-//        return financeRepository.findById(i).orElse(null);
-//    }
+    @Autowired
+    FinanceRepository financeRepository;
+    @Override
+    public Finance findAllFinance(int i) {
+        return financeRepository.findById(i).orElse(null);
+    }
 }

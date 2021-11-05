@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/finance")
 public class FinanceController {
 
-//    @Autowired
-//    FinanceService financeService;
-//
-//    @RequestMapping(value = "/financeView", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Finance> getFinance() {
-//        Finance finance = financeService.findAllFinance(1);
-//        if (finance == null) {
-//            return new ResponseEntity<Finance>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<Finance>(finance, HttpStatus.OK);
-//    }
+    @Autowired
+    FinanceService financeService;
+
+    @RequestMapping(value = "/financeView", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Finance> getFinance() {
+        Finance finance = financeService.findAllFinance(1);
+        if (finance == null) {
+            return new ResponseEntity<Finance>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Finance>(finance, HttpStatus.OK);
+    }
 }
