@@ -16,6 +16,7 @@ public class Employee {
     private boolean gender;
     private Integer salary;
     private String idCard;
+    private String img;
 
     @OneToMany(mappedBy = "employee")
     private Set<Contract> contracts;
@@ -112,5 +113,13 @@ public class Employee {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
