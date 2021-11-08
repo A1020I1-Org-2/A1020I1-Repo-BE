@@ -17,6 +17,7 @@ public class Customer {
     private String phone;
     private boolean gender;
     private String idCard;
+    private String img;
 
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
@@ -94,5 +95,13 @@ public class Customer {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
