@@ -11,12 +11,13 @@ public class Customer {
     @Id
     private String customerId;
     private String name;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String email;
     private String address;
     private String phone;
     private boolean gender;
     private String idCard;
+    private String imageUrl;
 
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
@@ -40,11 +41,11 @@ public class Customer {
         this.name = name;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -94,5 +95,13 @@ public class Customer {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
