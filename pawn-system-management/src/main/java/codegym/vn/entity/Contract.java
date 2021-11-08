@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,23 +21,18 @@ public class Contract {
     private Date startDate;
     private Date endDate;
     private Integer quantity;
-
     @ManyToOne(targetEntity = StatusContract.class)
     @JoinColumn(name = "status_contract_id", referencedColumnName = "statusContractId")
     private StatusContract statusContract;
-
     @ManyToOne(targetEntity = TypeProduct.class)
     @JoinColumn(name = "type_product_id", referencedColumnName = "typeProductId")
     private TypeProduct typeProduct;
-
     @ManyToOne(targetEntity = TypeContract.class)
     @JoinColumn(name = "type_contract_id", referencedColumnName = "typeContractId")
     private TypeContract typeContract;
-
     @ManyToOne(targetEntity = Employee.class)
     @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
-
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
