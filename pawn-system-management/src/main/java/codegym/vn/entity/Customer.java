@@ -96,4 +96,12 @@ public class Customer {
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
     }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 }
