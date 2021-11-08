@@ -1,56 +1,42 @@
 package codegym.vn.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import java.sql.Date;
 
-@Entity
-public class Contract {
-    @Id
+public class ContractDTO {
     private String contractId;
+    @NotBlank(message = "Ảnh đồ cầm không được để trống,")
     private String productImg;
+    @NotBlank(message = "Tên sản phẩm không được để trống.")
     private String productName;
-    private Integer interestMoney;
-    private Integer receiveMoney;
-    private Integer loanMoney;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotEmpty(message ="Tiền lãi không được để trống." )
+    @Min(value = 50000,message = "Tiền lãi phải tối thiểu 500000 vnđ.")
+    private int interestMoney;
+    private int receiveMoney;
+    @NotEmpty(message ="Tiền cho vay không được để trống." )
+    @Min(value = 500000,message = "Tiền cho vay phải tối thiểu 5000000 vnđ.")
+    private int loanMoney;
     private Date liquidationDate;
     private Date startDate;
     private Date endDate;
-    private Integer quantity;
-
-    @ManyToOne(targetEntity = StatusContract.class)
-    @JoinColumn(name = "status_contract_id", referencedColumnName = "statusContractId")
+    @NotEmpty(message = "Số lượng không được để trống.")
+    @Positive(message = "Số lượng phải lớn hơn 0.")
+    private int quantity;
     private StatusContract statusContract;
-
-    @ManyToOne(targetEntity = TypeProduct.class)
-    @JoinColumn(name = "type_product_id", referencedColumnName = "typeProductId")
     private TypeProduct typeProduct;
-
-    @ManyToOne(targetEntity = TypeContract.class)
-    @JoinColumn(name = "type_contract_id", referencedColumnName = "typeContractId")
     private TypeContract typeContract;
 
-    @ManyToOne(targetEntity = Employee.class)
-    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
-    private Employee employee;
+    private String employeeId;
 
-    @ManyToOne(targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
-    private Customer customer;
+    private String customerId;
 
-    public Contract() {
+    public ContractDTO() {
     }
 
-    public Contract(String contractId, String productImg, String productName, Integer interestMoney, Integer receiveMoney, Integer loanMoney, Date liquidationDate, Date startDate, Date endDate, Integer quantity, StatusContract statusContract, TypeProduct typeProduct, TypeContract typeContract, Employee employee, Customer customer) {
+    public ContractDTO(String contractId, @NotBlank(message = "Ảnh đồ cầm không được để trống,") String productImg, @NotBlank(message = "Tên sản phẩm không được để trống.") String productName, @NotEmpty(message = "Tiền lãi không được để trống.") @Min(value = 50000, message = "Tiền lãi phải tối thiểu 500000 vnđ.") int interestMoney, int receiveMoney, @NotEmpty(message = "Tiền cho vay không được để trống.") @Min(value = 500000, message = "Tiền cho vay phải tối thiểu 5000000 vnđ.") int loanMoney, Date liquidationDate, Date startDate, Date endDate, @NotEmpty(message = "Số lượng không được để trống.") @Positive(message = "Số lượng phải lớn hơn 0.") int quantity, StatusContract statusContract, TypeProduct typeProduct, TypeContract typeContract, String employeeId, String customerId) {
         this.contractId = contractId;
         this.productImg = productImg;
         this.productName = productName;
@@ -64,16 +50,8 @@ public class Contract {
         this.statusContract = statusContract;
         this.typeProduct = typeProduct;
         this.typeContract = typeContract;
-        this.employee = employee;
-        this.customer = customer;
-    }
-
-    public String getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
+        this.employeeId = employeeId;
+        this.customerId = customerId;
     }
 
     public String getProductImg() {
@@ -92,27 +70,27 @@ public class Contract {
         this.productName = productName;
     }
 
-    public Integer getInterestMoney() {
+    public int getInterestMoney() {
         return interestMoney;
     }
 
-    public void setInterestMoney(Integer interestMoney) {
+    public void setInterestMoney(int interestMoney) {
         this.interestMoney = interestMoney;
     }
 
-    public Integer getReceiveMoney() {
+    public int getReceiveMoney() {
         return receiveMoney;
     }
 
-    public void setReceiveMoney(Integer receiveMoney) {
+    public void setReceiveMoney(int receiveMoney) {
         this.receiveMoney = receiveMoney;
     }
 
-    public Integer getLoanMoney() {
+    public int getLoanMoney() {
         return loanMoney;
     }
 
-    public void setLoanMoney(Integer loanMoney) {
+    public void setLoanMoney(int loanMoney) {
         this.loanMoney = loanMoney;
     }
 
@@ -140,11 +118,11 @@ public class Contract {
         this.endDate = endDate;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -172,19 +150,27 @@ public class Contract {
         this.typeContract = typeContract;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 }
