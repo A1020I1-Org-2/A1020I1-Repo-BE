@@ -2,6 +2,8 @@ package codegym.vn.controller;
 
 import codegym.vn.entity.Contract;
 import codegym.vn.service.StatisticService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class StatisticController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(contractList, HttpStatus.OK);
     }
+
     @GetMapping("/statisticLiquidation")
     public ResponseEntity<List<Contract>> statisticLiquidation(
             @RequestParam(value = "start", required = false)String start,

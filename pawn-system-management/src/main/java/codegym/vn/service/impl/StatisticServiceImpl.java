@@ -14,10 +14,6 @@ public class StatisticServiceImpl implements StatisticService {
     @Autowired
     StatisticRepository statisticRepository;
 
-    @Override
-    public List<Contract> getAll() {
-        return statisticRepository.findAll();
-    }
 
     @Override
     public List<Contract> statisticInterest(Date startDate, Date endDate) {
