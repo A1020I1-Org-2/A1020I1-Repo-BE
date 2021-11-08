@@ -60,8 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // tắt xác thực cho các trang này
                 .authorizeRequests().antMatchers("/api/public/**", "/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/api/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
-                .antMatchers("/api/member/**").hasAnyRole("MEMBER", "ADMIN")
+                .antMatchers("/api/employee/**", "/random").hasAnyRole("EMPLOYEE")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
                 // các trang còn lại phải xác thực
                 .anyRequest().authenticated().and().

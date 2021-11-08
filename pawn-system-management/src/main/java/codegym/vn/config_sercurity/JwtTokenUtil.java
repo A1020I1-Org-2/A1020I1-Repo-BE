@@ -13,24 +13,24 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
-    private String jwtSecret ="secretkey";
+    private final String JWT_SECRET ="secretkey";
     public static final int JWT_TOKEN_VALIDITY = 5 * 60 * 60;
     public String generateJwtToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
     }
 
     public String getUsernameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());

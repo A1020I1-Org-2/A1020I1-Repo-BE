@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import io.jsonwebtoken.JwtException;
-
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
@@ -32,6 +30,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = this.parseJwt(request);
+
             if (jwt != null && jwtTokenUtil.validateJwtToken(jwt)) {
                 String username = jwtTokenUtil.getUsernameFromJwtToken(jwt);
                 UserDetails userDetails = accountDetailsService.loadUserByUsername(username);
@@ -49,8 +48,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7, headerAuth.length());
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Token ")) {
+            return headerAuth.substring(6);
         }
         return null;
     }

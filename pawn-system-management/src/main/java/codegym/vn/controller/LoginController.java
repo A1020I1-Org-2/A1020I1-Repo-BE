@@ -9,14 +9,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-//@RequestMapping(value = "/login")
 public class LoginController {
 
     @Autowired
@@ -35,8 +31,14 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Trả về jwt cho người dùng.
-        String jwt = jwtTokenUtil.getUsernameFromJwtToken(userName);
+        String jwt = jwtTokenUtil.generateJwtToken(userName);
+        System.out.println("Token " + jwt);
         return new ResponseEntity<>(jwt, HttpStatus.OK);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<String> randomStuff(){
+        return new ResponseEntity<>("JWT Hợp lệ mới có thể thấy được message này", HttpStatus.OK);
     }
 
 }
