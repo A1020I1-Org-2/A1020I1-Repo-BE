@@ -17,6 +17,7 @@ public class Customer {
     private String phone;
     private boolean gender;
     private String idCard;
+    private String img;
 
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
