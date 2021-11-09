@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
-
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -20,8 +20,11 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
             "inner join TypeContract t on t.typeContractId = c.typeContract.typeContractId\n" +
             "inner join StatusContract s on s.statusContractId = c.statusContract.statusContractId\n" +
             "where c.contractId like %:key% \n" +
-            "or c.productName like %:key% or cus.name like %:key% or c.startDate like %:key% or t.name like %:key% or s.name like %:key%")
+            "or c.productName like %:key% or cus.name like %:key%  or t.name like %:key% or s.name like %:key%")
     List<Contract> searchListTop10(@Param("key") String name);
+
+    List<Contract> findAllByStartDate(Date date);
+
 
     List<Contract> findTop10ByOrderByStartDateAsc();
 

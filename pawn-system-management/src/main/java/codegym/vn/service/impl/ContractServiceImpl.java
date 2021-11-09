@@ -1,19 +1,27 @@
 package codegym.vn.service.impl;
 
+import codegym.vn.dto.EditContract;
 import codegym.vn.entity.Contract;
+import codegym.vn.entity.Customer;
 import codegym.vn.repository.ContractRepository;
+import codegym.vn.repository.CustomerRepository;
 import codegym.vn.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class ContractServiceImpl implements ContractService {
     @Autowired
     private ContractRepository contractRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
 
     @Override
@@ -27,12 +35,25 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void contractEdit(Contract contract) {
-        this.contractRepository.save(contract);
+    public void contractUpdate(Contract contract) {
+        contractRepository.save(contract);
     }
+
 
     @Override
     public List<Contract> contractListTop10Search(String name) {
-        return this.contractRepository.searchListTop10(name);
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("dd/MM/yyyy").parse(name);
+            return this.contractRepository.findAllByStartDate(date);
+        } catch (ParseException e) {
+            return this.contractRepository.searchListTop10(name);
+        }
+    }
+
+
+    @Override
+    public void contractDelete(Contract contract) {
+        this.contractRepository.delete(contract);
     }
 }
