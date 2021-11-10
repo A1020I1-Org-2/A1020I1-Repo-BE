@@ -37,7 +37,7 @@ public class ContractController {
     @GetMapping("/get-liquidation-product-list")
     public ResponseEntity<Page<Contract>> getLiquidationContractList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Contract> contractList = this.contractService.getLiquidationProductList(pageable);
-        if (contractList == null) {
+        if (contractList == null || contractList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Page<Contract>>(contractList,HttpStatus.OK);

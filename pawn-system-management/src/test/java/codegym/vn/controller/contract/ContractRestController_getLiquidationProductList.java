@@ -43,10 +43,10 @@ public class ContractRestController_getLiquidationProductList {
     public void getLiquidationProductList_6() {
 
         ResponseEntity<Page<Contract>> responseEntity
-                = this.contractController.getLiquidationContractList(PageRequest.of(0, 2));
+                = this.contractController.getLiquidationContractList(PageRequest.of(0, 5));
 
         Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
         Assertions.assertEquals(2, responseEntity.getBody().getTotalPages());
-        Assertions.assertEquals(3, responseEntity.getBody().getTotalElements());
+        Assertions.assertEquals(6, responseEntity.getBody().getTotalElements());
     }
 }

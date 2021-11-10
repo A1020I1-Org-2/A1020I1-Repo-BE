@@ -20,6 +20,11 @@ public class TypeProduct {
     public TypeProduct() {
     }
 
+    public TypeProduct(Integer typeProductId, String name) {
+        this.typeProductId = typeProductId;
+        this.name = name;
+    }
+
     public Integer getTypeProductId() {
         return typeProductId;
     }

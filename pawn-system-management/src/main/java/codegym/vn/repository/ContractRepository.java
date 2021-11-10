@@ -11,18 +11,18 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
     @Query(
            value = "select * from contract c inner join type_product  on" +
                    " c.type_product_id = type_product.type_product_id " +
-                   "where c.product_name like %:product_name% or c.product_name is null" +
-                   " and c.receive_money like %:receive_money% or c.receive_money is null " +
-                   "and type_product.name like %:name% or type_product.name is null",nativeQuery= true
+                   "where (c.product_name like %:product_name% or c.product_name is null)" +
+                   " and (c.receive_money = :receive_money or c.receive_money is null )" +
+                   "and (type_product.name like %:name% or type_product.name is null)",nativeQuery= true
     )
     Page<Contract> searchLiquidationProduct(@Param("product_name") String productName,
                                             @Param("receive_money") Integer receiveMoney,
                                             @Param("name") String typeProductName,
                                             Pageable pageable);
     @Query(
-            value = "select * from contract ct inner join status_contract on\n" +
-                    "                     ct.status_contract_id = status_contract.status_contract_id where\n" +
-                    "                    status_contract.name = 'open'",nativeQuery= true
+            value = "select ct from Contract ct inner join StatusContract sc on" +
+                    " ct.statusContract.statusContractId = sc.statusContractId " +
+                    "where sc.name = 'pending' "
     )
     Page<Contract> getLiquidationProductList(Pageable pageable);
 }
