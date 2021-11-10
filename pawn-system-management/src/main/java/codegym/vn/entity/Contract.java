@@ -1,5 +1,8 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,6 +39,7 @@ public class Contract {
     @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
 
+    @JsonManagedReference
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;

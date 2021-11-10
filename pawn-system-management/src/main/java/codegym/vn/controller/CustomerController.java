@@ -20,7 +20,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/listCustomer")
-    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(value = 5) Pageable pageable) {
+    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(value = 10) Pageable pageable) {
         Page<Customer> customers = customerService.getListCustomer(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -30,8 +30,24 @@ public class CustomerController {
 
     @DeleteMapping("/deleteCustomer/{customerId}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable String customerId) {
+        if (!customerService.findById(customerId).isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         customerService.deleteCustomer(customerId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/searchCustomer")
+    public ResponseEntity<Page<Customer>> getSearchCustomer(@PageableDefault(value = 5) Pageable pageable,
+                                                            @RequestParam(defaultValue = "1900-01-01") String dateOfBirthFrom,
+                                                            @RequestParam(defaultValue = "2100-01-01") String dateOfBirthTo,
+                                                            @RequestParam(defaultValue = "")String address,
+                                                            @RequestParam(defaultValue = "")String name) {
+        Page<Customer> customers = customerService.searchCustomer(dateOfBirthFrom,dateOfBirthTo, address, name, pageable);
+        if (customers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
 }

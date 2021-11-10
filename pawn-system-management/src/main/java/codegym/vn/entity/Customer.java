@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -11,14 +13,15 @@ public class Customer {
     @Id
     private String customerId;
     private String name;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String email;
     private String address;
     private String phone;
     private boolean gender;
     private String idCard;
-    private String imageUrl;
+    private String img;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
 
@@ -41,11 +44,11 @@ public class Customer {
         this.name = name;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -97,11 +100,11 @@ public class Customer {
         this.contracts = contracts;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImg() {
+        return img;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImg(String img) {
+        this.img = img;
     }
 }

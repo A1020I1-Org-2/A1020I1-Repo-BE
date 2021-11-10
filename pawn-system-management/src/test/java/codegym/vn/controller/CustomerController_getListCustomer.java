@@ -44,7 +44,7 @@ public class CustomerController_getListCustomer {
         Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
         Assertions.assertEquals(1, responseEntity.getBody().getTotalPages());
         Assertions.assertEquals(1, responseEntity.getBody().getTotalElements());
-        Assertions.assertEquals("1",
+        Assertions.assertEquals("KH-0001",
                 responseEntity.getBody().getContent().get(0).getCustomerId());
     }
 

@@ -5,9 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public interface CustomerService {
     Page<Customer> getListCustomer(Pageable pageable);
 
     void deleteCustomer(String customerId);
+
+    Optional<Customer> findById(String customerId);
+
+    Page<Customer> searchCustomer(String dateOfBirthForm, String dateOfBirthTo, String address, String name, Pageable pageable);
 }
