@@ -11,8 +11,7 @@ import java.util.List;
 public interface ContractService {
     Contract findById(String id);
     List<Contract> contractListTop10();
-    void contractUpdate(Contract contract);
+    void contractUpdate(EditContract editContract);
     List<Contract> contractListTop10Search(String name);
-
-    void contractDelete(Contract contract);
+    void contractDelete(String  id);
 }

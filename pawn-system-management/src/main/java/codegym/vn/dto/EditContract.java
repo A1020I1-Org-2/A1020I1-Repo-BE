@@ -7,34 +7,50 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class EditContract implements Validator {
-    private String contractId;
+    private String contractID;
+    private String customerID;
     @NotEmpty
     private String customerName;
     @NotEmpty
     private String productName;
     @NotEmpty
-    private String productType;
+    private int productTypeID;
     @NotEmpty
     private Date startDate;
     @NotEmpty
     private Date endDate;
+
     @NotEmpty
-    private String contractType;
-    @NotEmpty
-    private String status;
+    private int statusTypeID;
 
     public EditContract() {
     }
 
-    public EditContract(String contractId, @NotEmpty String customerName, @NotEmpty String productName, @NotEmpty String productType, @NotEmpty Date startDate, @NotEmpty Date endDate, @NotEmpty String contractType, @NotEmpty String status) {
-        this.contractId = contractId;
+    public EditContract(String contractID, String customerID, String customerName, String productName, int productTypeID, Date startDate, Date endDate, int statusTypeID) {
+        this.contractID = contractID;
+        this.customerID = customerID;
         this.customerName = customerName;
         this.productName = productName;
-        this.productType = productType;
+        this.productTypeID = productTypeID;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.contractType = contractType;
-        this.status = status;
+        this.statusTypeID = statusTypeID;
+    }
+
+    public String getContractID() {
+        return contractID;
+    }
+
+    public void setContractID(String contractID) {
+        this.contractID = contractID;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
     public String getCustomerName() {
@@ -53,12 +69,12 @@ public class EditContract implements Validator {
         this.productName = productName;
     }
 
-    public String getProductType() {
-        return productType;
+    public int getProductTypeID() {
+        return productTypeID;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setProductTypeID(int productTypeID) {
+        this.productTypeID = productTypeID;
     }
 
     public Date getStartDate() {
@@ -77,33 +93,17 @@ public class EditContract implements Validator {
         this.endDate = endDate;
     }
 
-    public String getContractId() {
-        return contractId;
+    public int getStatusTypeID() {
+        return statusTypeID;
     }
 
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
-    }
-
-    public String getContractType() {
-        return contractType;
-    }
-
-    public void setContractType(String contractType) {
-        this.contractType = contractType;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusTypeID(int statusTypeID) {
+        this.statusTypeID = statusTypeID;
     }
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return EditContract.class.isAssignableFrom(clazz);
+        return false;
     }
 
     @Override

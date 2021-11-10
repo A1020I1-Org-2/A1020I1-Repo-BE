@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -19,6 +21,7 @@ public class Employee {
     private String img;
 
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<Contract> contracts;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)

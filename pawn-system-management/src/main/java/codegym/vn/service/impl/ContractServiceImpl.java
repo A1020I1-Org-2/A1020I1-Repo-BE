@@ -3,8 +3,12 @@ package codegym.vn.service.impl;
 import codegym.vn.dto.EditContract;
 import codegym.vn.entity.Contract;
 import codegym.vn.entity.Customer;
+import codegym.vn.entity.StatusContract;
+import codegym.vn.entity.TypeProduct;
 import codegym.vn.repository.ContractRepository;
 import codegym.vn.repository.CustomerRepository;
+import codegym.vn.repository.StatusReponsitory;
+import codegym.vn.repository.TypeProductRepository;
 import codegym.vn.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,11 @@ public class ContractServiceImpl implements ContractService {
     private ContractRepository contractRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private StatusReponsitory statusReponsitory;
+
+    @Autowired
+    private TypeProductRepository typeProductRepository;
 
 
     @Override
@@ -35,8 +44,25 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void contractUpdate(Contract contract) {
-        contractRepository.save(contract);
+    public void contractUpdate(EditContract editContract) {
+        Contract contract = this.contractRepository.getById(editContract.getContractID());
+
+        Customer customer = this.customerRepository.getById(editContract.getCustomerID());
+
+        StatusContract statusContract = this.statusReponsitory.getById(editContract.getStatusTypeID());
+
+        TypeProduct typeProduct = this.typeProductRepository.getById(editContract.getProductTypeID());
+
+        customer.setName(editContract.getCustomerName());
+        contract.setCustomer(customer);
+        contract.setTypeProduct(typeProduct);
+        contract.setProductName(editContract.getProductName());
+        contract.setStartDate(editContract.getStartDate());
+        contract.setEndDate(editContract.getEndDate());
+        contract.setStatusContract(statusContract);
+
+        this.contractRepository.save(contract);
+
     }
 
 
@@ -53,7 +79,7 @@ public class ContractServiceImpl implements ContractService {
 
 
     @Override
-    public void contractDelete(Contract contract) {
-        this.contractRepository.delete(contract);
+    public void contractDelete(String id) {
+        this.contractRepository.deleteById(id);
     }
 }
