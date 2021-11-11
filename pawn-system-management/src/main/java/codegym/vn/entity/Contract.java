@@ -21,18 +21,23 @@ public class Contract {
     private Date startDate;
     private Date endDate;
     private Integer quantity;
+    @JsonBackReference
     @ManyToOne(targetEntity = StatusContract.class)
     @JoinColumn(name = "status_contract_id", referencedColumnName = "statusContractId")
     private StatusContract statusContract;
+    @JsonBackReference
     @ManyToOne(targetEntity = TypeProduct.class)
     @JoinColumn(name = "type_product_id", referencedColumnName = "typeProductId")
     private TypeProduct typeProduct;
+    @JsonBackReference
     @ManyToOne(targetEntity = TypeContract.class)
     @JoinColumn(name = "type_contract_id", referencedColumnName = "typeContractId")
     private TypeContract typeContract;
+    @JsonBackReference
     @ManyToOne(targetEntity = Employee.class)
     @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
+    @JsonBackReference
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;

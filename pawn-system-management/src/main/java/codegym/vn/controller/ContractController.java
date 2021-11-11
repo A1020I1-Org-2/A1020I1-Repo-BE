@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/contract")
@@ -19,7 +23,7 @@ public class ContractController {
 
     @GetMapping("/listContract")
     public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 5) Pageable pageable){
-        Page<Contract> contractList = contractService.getContractList(pageable);
+        Page<Contract> contractList = this.contractService.getContractList(pageable);
         if(contractList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -27,30 +31,49 @@ public class ContractController {
     }
     @GetMapping("/detail/{id}")
     public ResponseEntity<Contract> findContractById(@PathVariable String id){
-        Contract contract = contractService.findByContract(id);
+        Contract contract = this.contractService.findById(id);
         if(contract == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(contract, HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Contract> deleteContract(@PathVariable String id){
-        this.contractService.contractDelete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Contract contract = contractService.findById(id);
+        if (contract == null){
+            return new ResponseEntity<Contract>(HttpStatus.NOT_FOUND);
+        }
+        contractService.contractDelete(id);
+        return new ResponseEntity<Contract>(HttpStatus.OK);
     }
     @GetMapping("/search")
-    public ResponseEntity<Page<Contract>> searchContract(@RequestParam String customer,
-                                                         @RequestParam String productName,
-                                                         @RequestParam String statusContract,
-                                                         @RequestParam String typeContract,
-                                                         @RequestParam(defaultValue = "1999-01-01") String startDateFrom,
-                                                         @RequestParam(defaultValue = "2100-01-01") String startDateTo,
-                                                         @PageableDefault(size = 5) Pageable pageable){
-        Page<Contract> contractList = contractService.searchContract(customer, productName, statusContract, typeContract, startDateFrom, startDateTo, pageable);
+    public ResponseEntity<Page<Contract>> searchContract(@RequestParam("customer") String customer,
+                                                         @RequestParam("productName") String productName,
+                                                         @RequestParam("statusContract") String statusContract,
+                                                         @RequestParam("typeContract") String typeContract,
+                                                         @RequestParam("startDateFrom") String startDateFrom,
+                                                         @RequestParam("endDateTo") String endDateTo,
+                                                         @PageableDefault(size = 5) Pageable pageable) throws ParseException {
+        Date searchStartDate;
+        Date searchEndDate;
+        if(startDateFrom == "") {
+            searchStartDate = null;
+        }else {
+            searchStartDate = new SimpleDateFormat("yyyy-mm-dd").parse(startDateFrom);
+        }
+
+        if(endDateTo == "") {
+            searchEndDate = null;
+        }else {
+            searchEndDate = new SimpleDateFormat("yyyy-mm-dd").parse(endDateTo);
+        }
+
+        Page<Contract> contractList = contractService.searchContract(customer, productName, statusContract, typeContract,
+                searchStartDate, searchEndDate, pageable);
         if(contractList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
 
     }
 

@@ -6,7 +6,12 @@ import codegym.vn.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -24,15 +29,17 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Contract findByContract(String contractId) {
-        return contractRepository.findById(contractId).orElse(null);
+    public Contract findById(String id) {
+        return contractRepository.findById(id).orElse(null);
     }
 
     @Override
     public Page<Contract> searchContract(String customer, String productName, String statusContract, String typeContract,
-                                         String startDateFrom, String startDateTo, Pageable pageable) {
-        return contractRepository.searchContract(customer, productName, statusContract, typeContract, startDateFrom, startDateTo, pageable);
+                                         Date startDateFrom, Date endDateTo, Pageable pageable) {
+        return contractRepository.searchContract(customer, productName, statusContract, typeContract, startDateFrom, endDateTo, pageable);
     }
+
+
 
 
 }

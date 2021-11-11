@@ -36,7 +36,7 @@ public class ContractRestController_deleteContract {
 
     @Test
     public void testDeleteContract_28() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.delete("/contract/delete/{id}","2"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/contract/delete/{id}","HD-0002"))
                 .andExpect(status().is2xxSuccessful());
     }
 }

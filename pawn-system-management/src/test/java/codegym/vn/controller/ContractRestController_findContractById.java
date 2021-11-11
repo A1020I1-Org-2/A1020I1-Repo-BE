@@ -32,20 +32,17 @@ public class ContractRestController_findContractById {
     }
     @Test
     public void testDetailContract_3() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/contract/detail/{id}", "HD-9999"))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/contract/detail/{id}", "12378"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
     public void testDetailContract_4() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/contract/detail/{id}", "HD-0003"))
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/contract/detail/{id}", "HD-0002"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.productName").value("Xe máy"))
-                .andExpect(jsonPath("$.startDate").value("09-10-2021"))
-                .andExpect(jsonPath("$.endDate").value("09-11-2021"));
-
-
+                .andExpect(jsonPath("$.productName").value("áo"));
 
     }
 }
