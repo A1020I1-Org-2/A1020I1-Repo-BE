@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
-    @Query(value = "SELECT cus.*, count(con.contract_id) as so_luong_hd FROM customer cus left join contract con \n" +
-            "on cus.customer_id = con.customer_id group by cus.customer_id", nativeQuery = true)
+//    @Query(value = "SELECT cus.* FROM customer cus left join contract con \n" +
+//            "on cus.customer_id = con.customer_id group by cus.customer_id;", nativeQuery = true)
+    @Query(value = "SELECT * FROM customer", nativeQuery = true)
     Page<Customer> getListCustomer(Pageable pageable);
 
 

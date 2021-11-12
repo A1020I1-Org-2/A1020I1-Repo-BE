@@ -20,7 +20,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/listCustomer")
-    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(value = 10) Pageable pageable) {
+    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(value = 5) Pageable pageable) {
         Page<Customer> customers = customerService.getListCustomer(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

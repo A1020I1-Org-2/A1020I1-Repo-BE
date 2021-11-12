@@ -39,11 +39,11 @@ public class CustomerController_getListCustomer {
     public void testGetListCustomer_6() {
 
         ResponseEntity<Page<Customer>> responseEntity
-                = this.customerController.getListCustomer(PageRequest.of(0, 2));
+                = this.customerController.getListCustomer(PageRequest.of(0, 5));
 
         Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
-        Assertions.assertEquals(1, responseEntity.getBody().getTotalPages());
-        Assertions.assertEquals(1, responseEntity.getBody().getTotalElements());
+        Assertions.assertEquals(2, responseEntity.getBody().getTotalPages());
+        Assertions.assertEquals(6, responseEntity.getBody().getTotalElements());
         Assertions.assertEquals("KH-0001",
                 responseEntity.getBody().getContent().get(0).getCustomerId());
     }

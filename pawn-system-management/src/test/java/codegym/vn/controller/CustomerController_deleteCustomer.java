@@ -33,7 +33,7 @@ public class CustomerController_deleteCustomer {
     }
     @Test
     public void testDeleteCustomer_28() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/customer/deleteCustomer/{id}","KH-0003"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/customer/deleteCustomer/{id}","KH-0001"))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 }

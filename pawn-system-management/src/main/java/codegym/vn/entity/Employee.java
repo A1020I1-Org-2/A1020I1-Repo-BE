@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -18,6 +20,7 @@ public class Employee {
     private String idCard;
     private String img;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "employee")
     private Set<Contract> contracts;
 
