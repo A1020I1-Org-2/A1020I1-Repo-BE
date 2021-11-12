@@ -53,22 +53,22 @@ public class ContractController {
                                                          @RequestParam("typeContract") String typeContract,
                                                          @RequestParam("startDateFrom") String startDateFrom,
                                                          @RequestParam("endDateTo") String endDateTo,
-                                                         @PageableDefault(size = 5) Pageable pageable) throws ParseException {
+                                                         @PageableDefault(size = 6) Pageable pageable) throws ParseException {
         Date searchStartDate;
         Date searchEndDate;
-        if(startDateFrom == "") {
-            searchStartDate = null;
+        if(startDateFrom.equals("")) {
+            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
         }else {
-            searchStartDate = new SimpleDateFormat("yyyy-mm-dd").parse(startDateFrom);
+            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateFrom);
         }
 
-        if(endDateTo == "") {
-            searchEndDate = null;
+        if(endDateTo.equals("")) {
+            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse("3000-01-01");
         }else {
-            searchEndDate = new SimpleDateFormat("yyyy-mm-dd").parse(endDateTo);
+            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateTo);
         }
 
-        Page<Contract> contractList = contractService.searchContract(customer, productName, statusContract, typeContract,
+        Page<Contract> contractList = contractService.searchContract(customer,productName, statusContract, typeContract,
                 searchStartDate, searchEndDate, pageable);
         if(contractList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

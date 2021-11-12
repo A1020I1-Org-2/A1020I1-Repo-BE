@@ -6,8 +6,6 @@ import codegym.vn.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -36,10 +34,8 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public Page<Contract> searchContract(String customer, String productName, String statusContract, String typeContract,
                                          Date startDateFrom, Date endDateTo, Pageable pageable) {
-        return contractRepository.searchContract(customer, productName, statusContract, typeContract, startDateFrom, endDateTo, pageable);
+        return contractRepository.searchContractTest(customer, productName, statusContract, typeContract, startDateFrom, endDateTo, pageable);
     }
-
-
 
 
 }
