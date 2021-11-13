@@ -1,5 +1,6 @@
 package codegym.vn.controller;
 
+<<<<<<< HEAD
 import codegym.vn.entity.PawnType;
 import codegym.vn.entity.RegisterPawn;
 import codegym.vn.http_request.RegisterRequest;
@@ -12,11 +13,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+=======
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+>>>>>>> c75c02e65d56a857f83378e056f34a1cd923a02d
 
 @CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = {"/home", "/"})
 public class HomeController {
+<<<<<<< HEAD
     private final RegisterPawnService registerPawnService;
 
     @Autowired
@@ -40,4 +47,6 @@ public class HomeController {
     public List<PawnType> getPawnTypes(){
         return registerPawnService.getAllPawnTypes();
     }
+=======
+>>>>>>> c75c02e65d56a857f83378e056f34a1cd923a02d
 }

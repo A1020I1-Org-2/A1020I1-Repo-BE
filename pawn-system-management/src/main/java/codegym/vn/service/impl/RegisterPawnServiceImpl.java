@@ -1,5 +1,6 @@
 package codegym.vn.service.impl;
 
+<<<<<<< HEAD
 import codegym.vn.entity.PawnType;
 import codegym.vn.entity.RegisterPawn;
 import codegym.vn.http_request.RegisterRequest;
@@ -40,4 +41,11 @@ public class RegisterPawnServiceImpl implements RegisterPawnService {
         registerPawn.setNote(registerRequest.getNote());
         registerPawnRepository.save(registerPawn);
     }
+=======
+import codegym.vn.service.RegisterPawnService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RegisterPawnServiceImpl implements RegisterPawnService {
+>>>>>>> c75c02e65d56a857f83378e056f34a1cd923a02d
 }

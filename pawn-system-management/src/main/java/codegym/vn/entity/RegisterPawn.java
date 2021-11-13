@@ -11,7 +11,11 @@ public class RegisterPawn {
     private String email;
     private String address;
     private String phone;
+<<<<<<< HEAD
     //private Boolean status;
+=======
+    private boolean status;
+>>>>>>> c75c02e65d56a857f83378e056f34a1cd923a02d
     private String note;
 
     @ManyToOne(targetEntity = PawnType.class)
@@ -61,6 +65,17 @@ public class RegisterPawn {
         this.phone = phone;
     }
 
+<<<<<<< HEAD
+=======
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+>>>>>>> c75c02e65d56a857f83378e056f34a1cd923a02d
     public String getNote() {
         return note;
     }
