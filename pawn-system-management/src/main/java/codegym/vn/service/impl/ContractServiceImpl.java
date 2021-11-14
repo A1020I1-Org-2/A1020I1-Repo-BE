@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Autowired
     JavaMailSender emailSender;
-
+ 
     @Autowired
     ContractRepository contractRepository;
 
@@ -105,5 +106,51 @@ public class ContractServiceImpl implements ContractService {
                 "cellspacing=\"0\" role=\"presentation\" style=\"mso-table-lspace:0;mso-table-rspace:0\"><tr><td style=\"text-align:center\"><!--[if vml]><table align=\"left\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;\"><![endif]--><!--[if !vml]><!--><table class=\"icons-inner\" style=\"mso-table-lspace:0;mso-table-rspace:0;display:inline-block;margin-right:-4px;padding-left:0;padding-right:0\" cellpadding=\"0\" \n" +
                 "cellspacing=\"0\" role=\"presentation\"><!--<![endif]--><tr><td style=\"text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:6px\"><a href=\"https://www.designedwithbee.com/\"><img class=\"icon\" alt=\"Designed with BEE\" src=\"https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/53601_510656/Signature/bee.png\" height=\"32\" width=\"34\" align=\"center\" style=\"display:block;height:auto;border:0\"></a></td><td \n" +
                 "style=\"font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-size:15px;color:#9d9d9d;vertical-align:middle;letter-spacing:undefined;text-align:center\"><a href=\"https://www.designedwithbee.com/\" style=\"color:#9d9d9d;text-decoration:none\">Designed with BEE</a></td></tr></table></td></tr></table></td></tr></table></th></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><!-- End --></body></html>";
+    }
+  
+   @Override
+    public Page<Contract> getLiquidationProductList(Pageable pageable) {
+        return contractRepository.getLiquidationProductList(pageable);
+    }
+
+    @Override
+    public Page<Customer> getCustomerList(Pageable pageable) {
+        return contractRepository.getCustomerList(pageable);
+    }
+
+    @Override
+    public Page<Employee> getEmployeeList(Pageable pageable) {
+        return contractRepository.getEmployeeList(pageable);
+    }
+
+    @Override
+    public void saveLiquidationContract(ContractDto contractDto) {
+        Customer customer = customerRepository.getById(contractDto.getCustomerId());
+        Employee employee = employeeRepository.getById(contractDto.getEmployeeId());
+
+        Contract contract = new Contract (
+                contractDto.getContractId(),
+                contractDto.getProductImg(),
+                contractDto.getProductName(),
+                contractDto.getInterestMoney(),
+                contractDto.getReceiveMoney(),
+                contractDto.getLoanMoney(),
+                contractDto.getLiquidationDate(),
+                contractDto.getStartDate(),
+                contractDto.getEndDate(),
+                contractDto.getQuantity(),
+                contractDto.getStatusContract(),
+                contractDto.getTypeProduct(),
+                contractDto.getTypeContract(),
+                employee,
+                customer
+        );
+        contractRepository.save(contract);
+    }
+
+    @Override
+    public Page<Contract> searchLiquidationProduct(
+            String productName, String typeProduct, Integer receiveMoney, Pageable pageable) {
+        return contractRepository.searchLiquidationProduct(productName,receiveMoney,typeProduct,pageable);
     }
 }

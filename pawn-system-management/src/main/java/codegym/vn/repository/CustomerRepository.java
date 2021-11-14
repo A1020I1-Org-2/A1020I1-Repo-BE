@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
-
     @Query(
-            value="SELECT *" +
-                    "FROM Customer " +
-                    "WHERE name LIKE %:searchValue% OR id_card LIKE %:searchValue%",nativeQuery=true
+            value = "select cs from Customer cs where (cs.customerId like %:customerId% or cs.customerId is null) " +
+                    "and (cs.name like %:name% or cs.name is null) and (cs.idCard like %:idCard% or cs.idCard is null)"
     )
-    Page<Customer> searchCustomer(@Param("searchValue") String searchValue, Pageable pageable);
+    Page<Customer> searchCustomer(@Param("customerId") String customerId,
+                                  @Param("name") String name,
+                                  @Param("idCard") String idCard, Pageable pageable);
 }

@@ -3,6 +3,7 @@ package codegym.vn.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -20,6 +21,7 @@ public class Customer {
     private String phone;
     private boolean gender;
     private String idCard;
+    private String img;
 
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     @JsonIgnore
@@ -98,5 +100,13 @@ public class Customer {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
