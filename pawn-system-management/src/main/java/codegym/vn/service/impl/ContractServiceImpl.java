@@ -33,6 +33,16 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
+    public Page<Customer> getCustomerList(Pageable pageable) {
+        return contractRepository.getCustomerList(pageable);
+    }
+
+    @Override
+    public Page<Employee> getEmployeeList(Pageable pageable) {
+        return contractRepository.getEmployeeList(pageable);
+    }
+
+    @Override
     public void saveLiquidationContract(ContractDto contractDto) {
         Customer customer = customerRepository.getById(contractDto.getCustomerId());
         Employee employee = employeeRepository.getById(contractDto.getEmployeeId());

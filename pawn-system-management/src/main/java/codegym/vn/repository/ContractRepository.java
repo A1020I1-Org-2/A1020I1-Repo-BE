@@ -1,6 +1,8 @@
 package codegym.vn.repository;
 
 import codegym.vn.entity.Contract;
+import codegym.vn.entity.Customer;
+import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +27,17 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
                     "where sc.name = 'pending' "
     )
     Page<Contract> getLiquidationProductList(Pageable pageable);
+
+    @Query(
+            value = "select cs from Customer cs inner join Contract  ct on " +
+                    "cs.customerId = ct.customer.customerId"
+    )
+    Page<Customer> getCustomerList(Pageable pageable);
+    
+
+    @Query(
+            value = "select em from Employee em inner join Contract  ct on " +
+                    "em.employeeId = ct.employee.employeeId"
+    )
+    Page<Employee> getEmployeeList(Pageable pageable);
 }

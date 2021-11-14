@@ -2,6 +2,8 @@ package codegym.vn.controller;
 
 import codegym.vn.dto.ContractDto;
 import codegym.vn.entity.Contract;
+import codegym.vn.entity.Customer;
+import codegym.vn.entity.Employee;
 import codegym.vn.service.ContractService;
 import codegym.vn.service.impl.ContractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,24 @@ public class ContractController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Page<Contract>>(contractList,HttpStatus.OK);
+    }
+
+    @GetMapping("/get-customer-list")
+    public ResponseEntity<Page<Customer>> getCustomerList(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Customer> customerList = this.contractService.getCustomerList(pageable);
+        if (customerList == null || customerList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Page<Customer>>(customerList,HttpStatus.OK);
+    }
+
+    @GetMapping("/get-employee-list")
+    public ResponseEntity<Page<Employee>> getEmployeeList(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Employee> employeePage = this.contractService.getEmployeeList(pageable);
+        if (employeePage == null || employeePage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Page<Employee>>(employeePage,HttpStatus.OK);
     }
 
     @GetMapping("/search-liquidation-product")
