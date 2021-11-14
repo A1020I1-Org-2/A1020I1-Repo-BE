@@ -9,6 +9,8 @@ import codegym.vn.repository.CustomerRepository;
 import codegym.vn.repository.EmployeeRepository;
 import codegym.vn.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -70,6 +72,11 @@ public class ContractServiceImpl implements ContractService {
         helper.setSubject("Thông tin hợp đồng cầm đồ.");
 
         this.emailSender.send(message);
+    }
+
+    @Override
+    public Page<Customer> searchCustomer(String searchValue,Pageable pageable) {
+        return customerRepository.searchCustomer(searchValue,pageable);
     }
 
     @Scheduled(cron = "0 0/30 19 * * *")
