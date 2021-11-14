@@ -8,8 +8,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.util.Date;
+import java.util.List;
 
 public interface ContractRepository extends JpaRepository<Contract, String> {
+    @Query(
+            value="SELECT c FROM Contract c WHERE c.endDate = ?1"
+    )
+    List<Contract> findContractOutOfDate(Date CURDate);
+
+
     @Query(
            value = "select * from contract c inner join type_product  on" +
                    " c.type_product_id = type_product.type_product_id " +
@@ -41,6 +49,5 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
                     "em.employeeId = ct.employee.employeeId"
     )
     Page<Employee> getEmployeeList(Pageable pageable);
-
 
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 public class TypeContract {
     @Id
-    private Integer typeContractId;
+    private int typeContractId;
     private String name;
 
     @OneToMany(mappedBy = "typeContract")
@@ -20,16 +20,11 @@ public class TypeContract {
     public TypeContract() {
     }
 
-    public TypeContract(Integer typeContractId, String name) {
-        this.typeContractId = typeContractId;
-        this.name = name;
-    }
-
-    public Integer getTypeContractId() {
+    public int getTypeContractId() {
         return typeContractId;
     }
 
-    public void setTypeContractId(Integer typeContractId) {
+    public void setTypeContractId(int typeContractId) {
         this.typeContractId = typeContractId;
     }
 
