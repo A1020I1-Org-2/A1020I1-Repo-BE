@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -12,9 +14,15 @@ public class TypeContract {
     private String name;
 
     @OneToMany(mappedBy = "typeContract")
+    @JsonIgnore
     private Set<Contract> contracts;
 
     public TypeContract() {
+    }
+
+    public TypeContract(Integer typeContractId, String name) {
+        this.typeContractId = typeContractId;
+        this.name = name;
     }
 
     public Integer getTypeContractId() {
