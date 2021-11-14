@@ -26,7 +26,7 @@ public class CustomerDTO {
     @Pattern(regexp = "^(\\d{10}|\\d{12})$",
             message = "Phone number must contain 9 or 12 digits.")
     private String phone;
-    @NotEmpty(message = "Image can't empty")
+
     private boolean gender;
     @Pattern(regexp = "^(\\d{11})$",
             message = "Id card number must contain 11 digits.")
