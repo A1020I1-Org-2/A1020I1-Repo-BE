@@ -9,11 +9,11 @@ import java.util.Optional;
 
 @Service
 public interface CustomerService {
-    Page<Customer> getListCustomer(Pageable pageable);
+    Page<Customer> findAll(Pageable pageable);
 
     void deleteCustomer(String customerId);
 
     Optional<Customer> findById(String customerId);
 
-    Page<Customer> searchCustomer(String dateOfBirthForm, String dateOfBirthTo, String address, String name, Pageable pageable);
+    Page<Customer> searchCustomer(String customerId, String dateOfBirthForm, String dateOfBirthTo, String address, String name, Pageable pageable);
 }

@@ -43,7 +43,7 @@ public class Contract {
     @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
