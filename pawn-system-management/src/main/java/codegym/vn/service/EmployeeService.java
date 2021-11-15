@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface EmployeeService {
 
-    Page<Employee> searchEmployee(String employeeId, String fullName, String idCard, Pageable pageable);
+    Page<Employee> searchEmployee(String searchValue, Pageable pageable);
 }

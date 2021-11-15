@@ -5,6 +5,8 @@ import codegym.vn.entity.Contract;
 import codegym.vn.entity.Customer;
 import codegym.vn.entity.Employee;
 import codegym.vn.service.ContractService;
+import codegym.vn.service.CustomerService;
+import codegym.vn.service.EmployeeService;
 import codegym.vn.service.impl.ContractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -13,9 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 @Service
 public class ContractServiceImpl implements ContractService {
     @Autowired
@@ -33,12 +30,14 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Page<Customer> getCustomerList(Pageable pageable) {
+    public Page<Customer> getCustomerList(Pageable pageable)
+    {
         return contractRepository.getCustomerList(pageable);
     }
 
     @Override
-    public Page<Employee> getEmployeeList(Pageable pageable) {
+    public Page<Employee> getEmployeeList(Pageable pageable)
+    {
         return contractRepository.getEmployeeList(pageable);
     }
 

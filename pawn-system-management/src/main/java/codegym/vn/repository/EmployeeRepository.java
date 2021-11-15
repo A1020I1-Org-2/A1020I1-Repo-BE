@@ -9,11 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
     @Query(
-            value = "select em from Employee em where (em.employeeId like %:employeeId% or em.employeeId is null) " +
-                    "and (em.fullName like %:fullName% or em.fullName is null) " +
-                    "and (em.idCard like %:idCard% or em.idCard is null)"
+            value = "select em from Employee em where " +
+                    "em.employeeId like %:searchValue%  " +
+                    "or em.fullName like %:searchValue%  or " +
+                    "em.idCard like %:searchValue% ",nativeQuery = true
     )
-    Page<Employee> searchEmployee(@Param("employeeId") String employeeId,
-                                  @Param("fullName") String fullName,
-                                  @Param("idCard") String idCard, Pageable pageable);
+    Page<Employee> searchEmployee(@Param("searchValue") String searchValue, Pageable pageable);
 }

@@ -1,5 +1,4 @@
 package codegym.vn.service.impl;
-
 import codegym.vn.entity.Employee;
 import codegym.vn.repository.EmployeeRepository;
 import codegym.vn.service.EmployeeService;
@@ -13,7 +12,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
     @Override
-    public Page<Employee> searchEmployee(String employeeId, String fullName, String idCard, Pageable pageable) {
-        return employeeRepository.searchEmployee(employeeId,fullName,idCard,pageable);
+    public Page<Employee> searchEmployee(String searchValue, Pageable pageable) {
+        return employeeRepository.searchEmployee(searchValue,pageable);
     }
 }
