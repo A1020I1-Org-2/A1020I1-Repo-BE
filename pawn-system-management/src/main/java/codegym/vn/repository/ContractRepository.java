@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, String> {
-    @Query("select c\n" +
+    @Query( "select c\n" +
             "from Contract c\n" +
             "inner join Customer cus on cus.customerId = c.customer.customerId\n" +
             "inner join TypeContract t on t.typeContractId = c.typeContract.typeContractId\n" +

@@ -1,14 +1,8 @@
 package codegym.vn.service.impl;
 
 import codegym.vn.dto.EditContract;
-import codegym.vn.entity.Contract;
-import codegym.vn.entity.Customer;
-import codegym.vn.entity.StatusContract;
-import codegym.vn.entity.TypeProduct;
-import codegym.vn.repository.ContractRepository;
-import codegym.vn.repository.CustomerRepository;
-import codegym.vn.repository.StatusReponsitory;
-import codegym.vn.repository.TypeProductRepository;
+import codegym.vn.entity.*;
+import codegym.vn.repository.*;
 import codegym.vn.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +25,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Autowired
     private TypeProductRepository typeProductRepository;
+    @Autowired
+    private TypeContractRepository typeContractRepository;
 
 
     @Override
@@ -81,5 +77,20 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void contractDelete(String id) {
         this.contractRepository.deleteById(id);
+    }
+
+    @Override
+    public List<StatusContract> getAllStatus() {
+        return this.statusReponsitory.findAll();
+    }
+
+    @Override
+    public List<TypeContract> getAllTypeContract() {
+        return this.typeContractRepository.findAll();
+    }
+
+    @Override
+    public List<TypeProduct> getAllTypeProduct() {
+        return this.typeProductRepository.findAll();
     }
 }
