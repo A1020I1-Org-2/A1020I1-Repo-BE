@@ -1,14 +1,12 @@
 package codegym.vn.controller;
 
-import codegym.vn.config_sercurity.JwtTokenUtil;
+import codegym.vn.dto.AccountResponse;
+import codegym.vn.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:4200")
@@ -19,26 +17,21 @@ public class LoginController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private LoginService loginService;
 
     @GetMapping(value = "/login")
-    public ResponseEntity<String> doLogin(@Param("userName") String userName, @Param("password") String password){
-        // Xác thực từ username và password.
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
-
-        // Nếu không xảy ra exception tức là thông tin hợp lệ
-        // Set thông tin authentication vào Security Context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Trả về jwt cho người dùng.
-        String jwt = jwtTokenUtil.generateJwtToken(userName);
-        System.out.println("Token " + jwt);
-        return new ResponseEntity<>(jwt, HttpStatus.OK);
+    public ResponseEntity<AccountResponse> doLogin(@Param("userName") String userName,
+                                                   @Param("password") String password){
+        AccountResponse account = this.loginService.doLogin(userName, password);
+        if (account == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping("/random")
     public ResponseEntity<String> randomStuff(){
-        return new ResponseEntity<>("JWT Hợp lệ mới có thể thấy được message này", HttpStatus.OK);
+        return new ResponseEntity<>("Kiểm tra jwt thành công", HttpStatus.OK);
     }
 
 }
