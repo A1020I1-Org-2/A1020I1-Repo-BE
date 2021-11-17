@@ -22,7 +22,7 @@ public class ContractController {
     private ContractService contractService;
 
     @GetMapping("/listContract")
-    public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 5) Pageable pageable){
+    public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 6) Pageable pageable){
         Page<Contract> contractList = this.contractService.getContractList(pageable);
         if(contractList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -41,10 +41,10 @@ public class ContractController {
     public ResponseEntity<Contract> deleteContract(@PathVariable String id){
         Contract contract = contractService.findById(id);
         if (contract == null){
-            return new ResponseEntity<Contract>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         contractService.contractDelete(id);
-        return new ResponseEntity<Contract>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/search")
     public ResponseEntity<Page<Contract>> searchContract(@RequestParam("customer") String customer,
@@ -54,18 +54,19 @@ public class ContractController {
                                                          @RequestParam("startDateFrom") String startDateFrom,
                                                          @RequestParam("endDateTo") String endDateTo,
                                                          @PageableDefault(size = 6) Pageable pageable) throws ParseException {
+
         Date searchStartDate;
         Date searchEndDate;
         if(startDateFrom.equals("")) {
-            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
+            searchStartDate = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-1900");
         }else {
-            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateFrom);
+            searchStartDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateFrom);
         }
 
         if(endDateTo.equals("")) {
-            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse("3000-01-01");
+            searchEndDate = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-3000");
         }else {
-            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateTo);
+            searchEndDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateTo);
         }
 
         Page<Contract> contractList = contractService.searchContract(customer,productName, statusContract, typeContract,

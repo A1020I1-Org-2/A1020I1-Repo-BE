@@ -1,9 +1,9 @@
 package codegym.vn.controller;
 
-import codegym.vn.entity.Customer;
-import codegym.vn.entity.StatusContract;
-import codegym.vn.service.CustomerService;
-import codegym.vn.service.StatusContractService;
+import codegym.vn.entity.TypeContract;
+import codegym.vn.entity.TypeProduct;
+import codegym.vn.service.TypeContractService;
+import codegym.vn.service.TypeProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping(value = "/customer")
-public class CustomerController {
+@RequestMapping(value = "/typeProduct")
+public class TypeProductController {
     @Autowired
-    CustomerService customerService;
-    @GetMapping("/listCustomer")
-    public ResponseEntity<List<Customer>> getCustomerList(){
-        List<Customer> customerList = customerService.getCustomerList();
-        if(customerList.isEmpty()){
+    TypeProductService typeProductService;
+    @GetMapping("/listTypeProduct")
+    public ResponseEntity<List<TypeProduct>> getTypeProductList(){
+        List<TypeProduct> typeProductList = typeProductService.getTypeProductList();
+        if(typeProductList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(customerList, HttpStatus.OK);
+        return new ResponseEntity<>(typeProductList, HttpStatus.OK);
     }
 }
