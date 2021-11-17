@@ -8,10 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
@@ -22,7 +21,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/listCustomer")
-    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(value = 5) Pageable pageable) {
+    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(size = 5) Pageable pageable) {
         Page<Customer> customers = customerService.findAll(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -36,7 +35,7 @@ public class CustomerController {
         if (customerId == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Optional<Customer>>(customer, HttpStatus.OK);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteCustomer/{customerId}")
@@ -49,12 +48,12 @@ public class CustomerController {
     }
 
     @GetMapping("/searchCustomer")
-    public ResponseEntity<Page<Customer>> getSearchCustomer(@PageableDefault(value = 5) Pageable pageable,
-                                                            @RequestParam(defaultValue = "") String customerId,
-                                                            @RequestParam(defaultValue = "1900-01-01") String dateOfBirthFrom,
-                                                            @RequestParam(defaultValue = "2100-01-01") String dateOfBirthTo,
-                                                            @RequestParam(defaultValue = "")String address,
-                                                            @RequestParam(defaultValue = "")String name) {
+    public ResponseEntity<Page<Customer>> getSearchCustomer(@PageableDefault(size = 5) Pageable pageable,
+                                                            @RequestParam String customerId,
+                                                            @RequestParam Date dateOfBirthFrom,
+                                                            @RequestParam Date dateOfBirthTo,
+                                                            @RequestParam String address,
+                                                            @RequestParam String name) {
         Page<Customer> customers = customerService.searchCustomer(customerId, dateOfBirthFrom,dateOfBirthTo, address, name, pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

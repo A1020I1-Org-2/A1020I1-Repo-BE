@@ -5,7 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 //    @Query(value = "select cs from Customer cs left join Contract ct on " +
@@ -18,5 +19,5 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             "and (cus.address like %?3%) \n" +
             "and (cus.name like %?4%)\n" +
             "group by cus.customerId")
-    Page<Customer> searchCustomer(String customerId, String dateOfBirthFrom, String dataOfBirthTo, String address, String name, Pageable pageable);
+    Page<Customer> searchCustomer(String customerId, Date dateOfBirthFrom, Date dataOfBirthTo, String address, String name, Pageable pageable);
 }

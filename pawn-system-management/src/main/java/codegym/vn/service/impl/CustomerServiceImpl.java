@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -32,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> searchCustomer(String customerId, String dateOfBirthForm, String dateOfBirthTo, String address, String name, Pageable pageable) {
+    public Page<Customer> searchCustomer(String customerId, Date dateOfBirthForm, Date dateOfBirthTo, String address, String name, Pageable pageable) {
         return customerRepository.searchCustomer(customerId, dateOfBirthForm, dateOfBirthTo, address, name, pageable);
     }
 
