@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
@@ -113,15 +114,6 @@ public class ContractServiceImpl implements ContractService {
         return contractRepository.getLiquidationProductList(pageable);
     }
 
-    @Override
-    public Page<Customer> getCustomerList(Pageable pageable) {
-        return contractRepository.getCustomerList(pageable);
-    }
-
-    @Override
-    public Page<Employee> getEmployeeList(Pageable pageable) {
-        return contractRepository.getEmployeeList(pageable);
-    }
 
     @Override
     public void saveLiquidationContract(ContractDto contractDto) {

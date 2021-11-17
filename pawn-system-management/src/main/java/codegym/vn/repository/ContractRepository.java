@@ -36,18 +36,5 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
     )
     Page<Contract> getLiquidationProductList(Pageable pageable);
 
-    @Query(
-            value = "select cs from Customer cs inner join Contract  ct on " +
-                    "cs.customerId = ct.customer.customerId"
-    )
-    Page<Customer> getCustomerList(Pageable pageable);
-
-
-
-    @Query(
-            value = "select em from Employee em inner join Contract  ct on " +
-                    "em.employeeId = ct.employee.employeeId"
-    )
-    Page<Employee> getEmployeeList(Pageable pageable);
 
 }
