@@ -29,17 +29,6 @@ public class ContractServiceImpl implements ContractService {
         return contractRepository.getLiquidationProductList(pageable);
     }
 
-    @Override
-    public Page<Customer> getCustomerList(Pageable pageable)
-    {
-        return contractRepository.getCustomerList(pageable);
-    }
-
-    @Override
-    public Page<Employee> getEmployeeList(Pageable pageable)
-    {
-        return contractRepository.getEmployeeList(pageable);
-    }
 
     @Override
     public void saveLiquidationContract(ContractDto contractDto) {

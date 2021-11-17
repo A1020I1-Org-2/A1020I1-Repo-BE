@@ -11,10 +11,6 @@ import org.springframework.data.domain.Pageable;
 public interface ContractService {
     Page<Contract> getLiquidationProductList(Pageable pageable);
 
-    Page<Customer> getCustomerList(Pageable pageable);
-
-    Page<Employee> getEmployeeList(Pageable pageable);
-
     void saveLiquidationContract(ContractDto contractDto);
 
     Page<Contract> searchLiquidationProduct(

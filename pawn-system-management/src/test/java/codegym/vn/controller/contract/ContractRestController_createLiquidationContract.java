@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,7 +30,7 @@ public class ContractRestController_createLiquidationContract {
     private ObjectMapper objectMapper;
 
     @Test
-    private void createLiquidationContract_13() throws Exception {
+     void createLiquidationContract_13() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("null");
         contractDto.setCustomerId("null");
@@ -58,7 +57,7 @@ public class ContractRestController_createLiquidationContract {
     }
 
     @Test
-    private void createLiquidationContract_14() throws Exception {
+     void createLiquidationContract_14() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("");
         contractDto.setCustomerId("");
@@ -86,7 +85,7 @@ public class ContractRestController_createLiquidationContract {
     }
 
     @Test
-    private void createLiquidationContract_15() throws Exception {
+     void createLiquidationContract_15() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("");
         contractDto.setCustomerId("001");
@@ -114,7 +113,7 @@ public class ContractRestController_createLiquidationContract {
     }
 
     @Test
-    private void createLiquidationContract_16() throws Exception {
+    void createLiquidationContract_16() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("HD-01");
         contractDto.setCustomerId("");
@@ -142,7 +141,7 @@ public class ContractRestController_createLiquidationContract {
     }
 
     @Test
-    private void createLiquidationContract_17() throws Exception {
+    void createLiquidationContract_17() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("HD-0001");
         contractDto.setCustomerId("");
@@ -171,7 +170,7 @@ public class ContractRestController_createLiquidationContract {
 
 
     @Test
-    private void createLiquidationContract_18() throws Exception {
+     void createLiquidationContract_18() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("HD-0001");
         contractDto.setCustomerId("KH-0003");

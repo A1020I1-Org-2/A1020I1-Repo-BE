@@ -30,7 +30,7 @@ public class ContractRestController_getLiquidationProductList {
     private MockMvc mockMvc;
 
     @Test
-    public void getLiquidationProductList_5() throws Exception {
+     void getLiquidationProductList_5() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/contract/get-liquidation-product-list")
@@ -40,7 +40,7 @@ public class ContractRestController_getLiquidationProductList {
     }
 
     @Test
-    public void getLiquidationProductList_6() {
+     void getLiquidationProductList_6() {
 
         ResponseEntity<Page<Contract>> responseEntity
                 = this.contractController.getLiquidationContractList(PageRequest.of(0, 5));

@@ -12,7 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             value = "select cs from Customer cs where " +
                     "cs.customerId like %:searchValue% " +
                     "or cs.name like %:searchValue%  or " +
-                    "cs.idCard like %:searchValue%",nativeQuery = true
+                    "cs.idCard like %:searchValue%"
     )
     Page<Customer> searchCustomer(@Param("searchValue") String searchValue, Pageable pageable);
 }

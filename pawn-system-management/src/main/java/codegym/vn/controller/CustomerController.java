@@ -16,6 +16,16 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
+
+    @GetMapping("/getCustomerList")
+    public ResponseEntity<Page<Customer>> getCustomerList(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Customer> customerList = this.customerService.getCustomerList(pageable);
+        if (customerList == null || customerList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Page<Customer>>(customerList,HttpStatus.OK);
+    }
+
     @GetMapping(value = "/searchCustomer")
     public ResponseEntity<Page<Customer>> searchCustomer( @RequestParam(defaultValue = "") String searchValue,
                                                           @PageableDefault(value = 5) Pageable pageable){

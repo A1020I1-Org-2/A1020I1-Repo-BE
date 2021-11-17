@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomerService {
+    Page<Customer> getCustomerList(Pageable pageable);
     Page<Customer> searchCustomer(String searchValue, Pageable pageable);
 }

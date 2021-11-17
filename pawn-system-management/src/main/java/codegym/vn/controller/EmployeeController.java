@@ -16,6 +16,16 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
+
+    @GetMapping("/getEmployeeList")
+    public ResponseEntity<Page<Employee>> getEmployeeList(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Employee> employeePage = this.employeeService.getEmployeeList(pageable);
+        if (employeePage == null || employeePage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Page<Employee>>(employeePage,HttpStatus.OK);
+    }
+
     @GetMapping(value = "/searchEmployee")
     public ResponseEntity<Page<Employee>> searchEmployee(@RequestParam(defaultValue = "") String searchValue,
                                                          @PageableDefault(value = 5) Pageable pageable){

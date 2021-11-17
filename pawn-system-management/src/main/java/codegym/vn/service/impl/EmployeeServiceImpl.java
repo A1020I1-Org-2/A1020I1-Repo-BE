@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Override
+    public Page<Employee> getEmployeeList(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
+    }
     @Override
     public Page<Employee> searchEmployee(String searchValue, Pageable pageable) {
         return employeeRepository.searchEmployee(searchValue,pageable);

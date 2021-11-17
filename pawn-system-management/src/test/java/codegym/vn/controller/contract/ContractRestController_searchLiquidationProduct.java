@@ -28,21 +28,21 @@ public class ContractRestController_searchLiquidationProduct {
     private MockMvc mockMvc;
 
     @Test
-    public void searchLiquidationProduct_7() throws Exception {
+    void searchLiquidationProduct_7() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/contract/search-liquidation-product","null"))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void searchLiquidationProduct_8() throws Exception {
+     void searchLiquidationProduct_8() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/service/search/contract/search-liquidation-product", " "))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void searchLiquidationProduct_10() throws Exception {
+     void searchLiquidationProduct_10() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/contract/search-liquidation-product?product_name=&receive_money=&name=")
@@ -52,7 +52,7 @@ public class ContractRestController_searchLiquidationProduct {
     }
 
     @Test
-    public void searchLiquidationProduct_11() {
+    void searchLiquidationProduct_11() {
         ResponseEntity<Page<Contract>> responseEntity
                 = this.contractController.searchLiquidationProduct("Iphone",0,"",
                 PageRequest.of(0,2));
@@ -62,7 +62,7 @@ public class ContractRestController_searchLiquidationProduct {
         Assertions.assertEquals(8, responseEntity.getBody().getTotalElements());
     }
     @Test
-    public void searchLiquidationProduct_111() {
+     void searchLiquidationProduct_111() {
         ResponseEntity<Page<Contract>> responseEntity
                 = this.contractController.searchLiquidationProduct("Iphone",500,"",
                 PageRequest.of(0,2));
@@ -72,7 +72,7 @@ public class ContractRestController_searchLiquidationProduct {
         Assertions.assertEquals(3, responseEntity.getBody().getTotalElements());
     }
     @Test
-    public void searchLiquidationProduct_1112() {
+    void searchLiquidationProduct_1112() {
         ResponseEntity<Page<Contract>> responseEntity
                 = this.contractController.searchLiquidationProduct("Iphone",500,
                 "Điện thoại", PageRequest.of(0,2));
