@@ -19,7 +19,7 @@ public class RegisterPawnServiceImpl implements RegisterPawnService {
 
     @Autowired
     private RegisterPawnServiceImpl(PawnTypeRepository pawnTypeRepository,
-                                    RegisterPawnRepository registerPawnRepository){
+                                    RegisterPawnRepository registerPawnRepository) {
         this.registerPawnRepository = registerPawnRepository;
         this.pawnTypeRepository = pawnTypeRepository;
     }

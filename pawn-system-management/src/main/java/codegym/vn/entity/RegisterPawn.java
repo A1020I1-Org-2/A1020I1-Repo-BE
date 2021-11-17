@@ -11,7 +11,6 @@ public class RegisterPawn {
     private String email;
     private String address;
     private String phone;
-    //private Boolean status;
     private String note;
 
     @ManyToOne(targetEntity = PawnType.class)

@@ -12,11 +12,16 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = {"/home", "/"})
 public class HomeController {
+
     private final RegisterPawnService registerPawnService;
 
     @Autowired
