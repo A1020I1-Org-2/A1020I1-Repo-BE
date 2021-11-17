@@ -1,14 +1,18 @@
 package codegym.vn.entity;
 
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
@@ -22,6 +26,7 @@ public class Contract implements Validator {
     private Integer interestMoney;
     private Integer receiveMoney;
     private Integer loanMoney;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date liquidationDate;
     private Date startDate;
     private Date endDate;
@@ -49,6 +54,7 @@ public class Contract implements Validator {
 
     public Contract() {
     }
+
 
     public Contract(String contractId, String productImg, String productName, Integer interestMoney,
                     Integer receiveMoney, Integer loanMoney, Date liquidationDate, Date startDate,
