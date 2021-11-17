@@ -64,8 +64,8 @@ public class ContractController {
         }
         return new ResponseEntity<>(contracts, HttpStatus.OK);
     }
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Contract> contractUpdate(@Validated @RequestBody EditContract editContract, BindingResult bindingResult,@PathVariable String id){
+    @PutMapping("/edit")
+    public ResponseEntity<Contract> contractUpdate(@Validated @RequestBody EditContract editContract, BindingResult bindingResult){
 
 
         if (!bindingResult.hasFieldErrors() && editContract.getContractID() != null){

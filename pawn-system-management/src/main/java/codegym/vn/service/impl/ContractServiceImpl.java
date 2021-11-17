@@ -22,7 +22,6 @@ public class ContractServiceImpl implements ContractService {
     private CustomerRepository customerRepository;
     @Autowired
     private StatusReponsitory statusReponsitory;
-
     @Autowired
     private TypeProductRepository typeProductRepository;
     @Autowired
@@ -36,7 +35,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<Contract> contractListTop10() {
-        return this.contractRepository.findTop10ByOrderByStartDateAsc();
+        return this.contractRepository.findTop10ByOrderByStartDateDesc();
     }
 
     @Override

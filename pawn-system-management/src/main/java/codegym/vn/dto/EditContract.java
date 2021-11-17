@@ -13,14 +13,9 @@ public class EditContract implements Validator {
     private String customerName;
     @NotEmpty
     private String productName;
-    @NotEmpty
     private int productTypeID;
-    @NotEmpty
     private Date startDate;
-    @NotEmpty
     private Date endDate;
-
-    @NotEmpty
     private int statusTypeID;
 
     public EditContract() {

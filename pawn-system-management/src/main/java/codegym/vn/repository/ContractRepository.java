@@ -26,7 +26,7 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
     List<Contract> findAllByStartDate(Date date);
 
 
-    List<Contract> findTop10ByOrderByStartDateAsc();
+    List<Contract> findTop10ByOrderByStartDateDesc();
 
 
 }
