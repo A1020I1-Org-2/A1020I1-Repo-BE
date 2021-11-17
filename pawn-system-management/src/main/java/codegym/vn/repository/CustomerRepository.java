@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
+
     @Query(
             value = "select cs from Customer cs where " +
                     "cs.customerId like %:searchValue% " +
@@ -15,4 +16,5 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
                     "cs.idCard like %:searchValue%"
     )
     Page<Customer> searchCustomer(@Param("searchValue") String searchValue, Pageable pageable);
+
 }
