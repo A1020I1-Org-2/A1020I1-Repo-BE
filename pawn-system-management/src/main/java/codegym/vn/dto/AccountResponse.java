@@ -15,6 +15,10 @@ public class AccountResponse {
         this.role = role;
     }
 
+    public AccountResponse(String token) {
+        this.token = token;
+    }
+
     public String getUserName() {
         return userName;
     }
