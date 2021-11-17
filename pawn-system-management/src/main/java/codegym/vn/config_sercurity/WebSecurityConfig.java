@@ -44,33 +44,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Sét đặt dịch vụ để tìm kiếm User trong Database.
-        // Và sét đặt PasswordEncoder.
         auth.userDetailsService(accountDetailsService).passwordEncoder(passwordEncoder());
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.headers().frameOptions().disable().and().cors();
-        // tắt csrf
         http.cors().and().csrf().disable()
-                // tắt xác thực cho các trang này
                 .authorizeRequests().antMatchers("/api/public/**", "/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/api/employee/**", "/random").hasAnyRole("EMPLOYEE")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
-                // các trang còn lại phải xác thực
                 .anyRequest().authenticated().and().
-                // đảm bảo sử dụng đúng session Stateless;
-                // session sẽ không được sử dụng để lưu trữ thông tin người dùng
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().
                 sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // thêm bộ lọc để xác thực token
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

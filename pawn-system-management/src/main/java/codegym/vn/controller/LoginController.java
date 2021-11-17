@@ -1,9 +1,9 @@
 package codegym.vn.controller;
 
+import codegym.vn.dto.LoginForm;
 import codegym.vn.dto.AccountResponse;
 import codegym.vn.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,19 +19,20 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping(value = "/login")
-    public ResponseEntity<AccountResponse> doLogin(@Param("userName") String userName,
-                                                   @Param("password") String password){
-        AccountResponse account = this.loginService.doLogin(userName, password);
+    @PostMapping(value = "/login")
+    public ResponseEntity<AccountResponse> doLogin(@RequestBody LoginForm form){
+        AccountResponse account = this.loginService.doLogin(form.getUserName(),
+                form.getPassword());
         if (account == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping("/random")
-    public ResponseEntity<String> randomStuff(){
-        return new ResponseEntity<>("Kiểm tra jwt thành công", HttpStatus.OK);
+    public ResponseEntity<AccountResponse> randomStuff(){
+        return new ResponseEntity<>(new AccountResponse("Kiểm tra jwt thành công"),
+                HttpStatus.OK);
     }
 
 }
