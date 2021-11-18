@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -32,6 +32,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
 
 import java.util.List;
 
@@ -56,6 +57,26 @@ public class ContractServiceImpl implements ContractService {
     @Autowired
     ContractRepository contractRepository;
 
+    @Override
+    public Page<Contract> getContractList(Pageable pageable) {
+        return contractRepository.findAll(pageable);
+    }
+
+    @Override
+    public void contractDelete(String contractId) {
+        contractRepository.deleteById(contractId);
+    }
+
+    @Override
+    public Contract findById(String id) {
+        return contractRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Contract> searchContract(String customer, String productName, String statusContract, String typeContract,
+                                         Date startDateFrom, Date endDateTo, Pageable pageable) {
+        return contractRepository.searchContractTest(customer, productName, statusContract, typeContract, startDateFrom, endDateTo, pageable);
+    }
 
 
     @Override
@@ -232,4 +253,5 @@ public class ContractServiceImpl implements ContractService {
             String productName, String typeProduct, Integer receiveMoney, Pageable pageable) {
         return contractRepository.searchLiquidationProduct(productName,receiveMoney,typeProduct,pageable);
     }
+
 }

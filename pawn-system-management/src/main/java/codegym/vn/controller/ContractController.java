@@ -1,5 +1,7 @@
 package codegym.vn.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import codegym.vn.dto.EditContract;
 import codegym.vn.entity.Contract;
@@ -41,6 +43,63 @@ public class ContractController {
 
     @Autowired
     private ContractService contractService;
+
+    @GetMapping("/listContract")
+    public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 6) Pageable pageable){
+        Page<Contract> contractList = this.contractService.getContractList(pageable);
+        if(contractList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
+    }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Contract> findContractById(@PathVariable String id){
+        Contract contract = this.contractService.findById(id);
+        if(contract == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contract, HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Contract> deleteContract(@PathVariable String id){
+        Contract contract = contractService.findById(id);
+        if (contract == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        contractService.contractDelete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<Page<Contract>> searchContract(@RequestParam("customer") String customer,
+                                                         @RequestParam("productName") String productName,
+                                                         @RequestParam("statusContract") String statusContract,
+                                                         @RequestParam("typeContract") String typeContract,
+                                                         @RequestParam("startDateFrom") String startDateFrom,
+                                                         @RequestParam("endDateTo") String endDateTo,
+                                                         @PageableDefault(size = 6) Pageable pageable) throws ParseException {
+
+        Date searchStartDate;
+        Date searchEndDate;
+        if(startDateFrom.equals("")) {
+            searchStartDate = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-1900");
+        }else {
+            searchStartDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateFrom);
+        }
+
+        if(endDateTo.equals("")) {
+            searchEndDate = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-3000");
+        }else {
+            searchEndDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateTo);
+        }
+
+        Page<Contract> contractList = contractService.searchContract(customer,productName, statusContract, typeContract,
+                searchStartDate, searchEndDate, pageable);
+        if(contractList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
+
+    }
 
     @GetMapping("/listTop10")
     public ResponseEntity<List<Contract>> contractListTop10(){
@@ -170,4 +229,5 @@ public class ContractController {
         return new ResponseEntity<>(contractPage,HttpStatus.OK);
 
     }
+
 }
