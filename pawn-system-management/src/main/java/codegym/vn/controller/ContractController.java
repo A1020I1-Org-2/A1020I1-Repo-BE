@@ -4,17 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import codegym.vn.dto.EditContract;
-import codegym.vn.entity.Contract;
-import codegym.vn.entity.StatusContract;
-import codegym.vn.entity.TypeContract;
-import codegym.vn.entity.TypeProduct;
+import codegym.vn.entity.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 
 import codegym.vn.dto.ContractDto;
 import codegym.vn.entity.Contract;
-import codegym.vn.entity.Customer;
-import codegym.vn.entity.Employee;
 import codegym.vn.service.ContractService;
 import codegym.vn.service.CustomerService;
 import codegym.vn.service.EmployeeService;
@@ -69,6 +65,7 @@ public class ContractController {
         contractService.contractDelete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/search")
     public ResponseEntity<Page<Contract>> searchContract(@RequestParam("customer") String customer,
                                                          @RequestParam("productName") String productName,
@@ -161,15 +158,7 @@ public class ContractController {
         }
         return new ResponseEntity<>(contract,HttpStatus.OK);
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Contract> contractDelete(@PathVariable String id){
-        Contract contract = this.contractService.findById(id);
-        if (contract == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        this.contractService.contractDelete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
 
     @PostMapping(value = "/createPawn")
     public ResponseEntity<List<Error>> createPawn(@RequestBody ContractDTO contractDTO){

@@ -1,6 +1,7 @@
 package codegym.vn.service.impl;
 
 
+import codegym.vn.dto.ContractDto;
 import codegym.vn.dto.EditContract;
 import codegym.vn.entity.*;
 import codegym.vn.repository.*;
@@ -60,16 +61,6 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public Page<Contract> getContractList(Pageable pageable) {
         return contractRepository.findAll(pageable);
-    }
-
-    @Override
-    public void contractDelete(String contractId) {
-        contractRepository.deleteById(contractId);
-    }
-
-    @Override
-    public Contract findById(String id) {
-        return contractRepository.findById(id).orElse(null);
     }
 
     @Override
