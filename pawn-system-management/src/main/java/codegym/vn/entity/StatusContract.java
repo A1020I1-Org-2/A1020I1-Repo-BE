@@ -1,5 +1,6 @@
 package codegym.vn.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @Entity
 public class StatusContract {
     @Id
-    private Integer statusContractId;
+    private int statusContractId;
     private String name;
 
     @OneToMany(mappedBy = "statusContract")
@@ -21,11 +22,11 @@ public class StatusContract {
     public StatusContract() {
     }
 
-    public Integer getStatusContractId() {
+    public int getStatusContractId() {
         return statusContractId;
     }
 
-    public void setStatusContractId(Integer statusContractId) {
+    public void setStatusContractId(int statusContractId) {
         this.statusContractId = statusContractId;
     }
 
