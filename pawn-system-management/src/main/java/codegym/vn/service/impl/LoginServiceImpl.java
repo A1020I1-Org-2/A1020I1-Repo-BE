@@ -2,8 +2,8 @@ package codegym.vn.service.impl;
 
 import codegym.vn.config_sercurity.JwtTokenUtil;
 import codegym.vn.dto.AccountResponse;
+import codegym.vn.dto.ChangePasswordForm;
 import codegym.vn.entity.Account;
-import codegym.vn.repository.AccountRepository;
 import codegym.vn.service.AccountService;
 import codegym.vn.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -55,5 +58,23 @@ public class LoginServiceImpl implements LoginService {
             return null;
         }
         return new AccountResponse(userName, account.getLastUpdate(), jwt, role);
+    }
+
+    @Override
+    public boolean doChangePassword(ChangePasswordForm form) {
+        BCryptPasswordEncoder encode = new BCryptPasswordEncoder();
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(form.getUsername(),
+                    form.getPassword()));
+        }catch (Exception e){
+            return false;
+        }
+        Account account = this.accountService.findById(form.getUsername());
+        if(account == null){
+            return false;
+        }
+        account.setPassword(encode.encode(form.getNewPassword()));
+        account.setLastUpdate(new Date());
+        return this.accountService.save(account) != null;
     }
 }

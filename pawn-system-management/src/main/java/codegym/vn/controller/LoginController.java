@@ -1,5 +1,6 @@
 package codegym.vn.controller;
 
+import codegym.vn.dto.ChangePasswordForm;
 import codegym.vn.dto.LoginForm;
 import codegym.vn.dto.AccountResponse;
 import codegym.vn.service.LoginService;
@@ -27,6 +28,14 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/change-password")
+    public ResponseEntity<String> doChangePassword(@RequestBody ChangePasswordForm form){
+        if(this.loginService.doChangePassword(form)){
+            return new ResponseEntity<>("{\"message\": \"success\"}", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("{\"message\": \"fail\"}", HttpStatus.OK);
     }
 
     @GetMapping("/random")
