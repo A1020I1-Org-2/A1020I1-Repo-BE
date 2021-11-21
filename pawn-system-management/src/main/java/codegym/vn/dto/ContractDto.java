@@ -7,7 +7,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.time.Instant;
 import java.util.Date;
 
 public class ContractDto implements Validator {
@@ -192,10 +191,11 @@ public class ContractDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ContractDto contractDto = (ContractDto) target;
-        Date dateNow = Date.from(Instant.now());
-        if (liquidationDate.compareTo(dateNow)!=0){
+        Date dateNow = new Date();
+        long diff = (dateNow.getTime()- contractDto.getLiquidationDate().getTime())/(1000*60*60*24);
+        if (diff !=0){
             errors.rejectValue("liquidationDate","liquidationDate.noMulti",
-                    "Liquidation date not valid");
+                    "Ngày thanh lý phải là ngày hiện tại!");
         }
 
     }
