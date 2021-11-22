@@ -30,7 +30,7 @@ public class CustomerController {
     public ResponseEntity<Page<Customer>> searchCustomer( @RequestParam(defaultValue = "") String searchValue,
                                                           @PageableDefault(value = 5) Pageable pageable){
         Page<Customer> customers = customerService.searchCustomer(searchValue,pageable);
-        if(customers == null){
+        if(customers.isEmpty()){
             return new ResponseEntity<Page<Customer>>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Page<Customer>>(customers,HttpStatus.OK);

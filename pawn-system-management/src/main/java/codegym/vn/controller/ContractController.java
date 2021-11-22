@@ -62,18 +62,18 @@ public class ContractController {
         Page<Contract> contractPage = this.contractService.searchLiquidationProduct(productName, typeProductName,
                                                                                     temp == 0?null:temp, pageable);
         if (contractPage.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(contractPage,HttpStatus.OK);
     }
 
-    @PutMapping("/update-status-contract")
-    public ResponseEntity<Error> updateStatusContractPawn(@RequestBody String contractID ){
+    @GetMapping("/update-status-contract")
+    public ResponseEntity<Contract> updateStatusContractPawn(@RequestParam(value = "contractID") String contractID ){
         contractService.updateStatusContractPawn(contractID);
         if (contractService.updateStatusContractPawn(contractID)) {
-            return new ResponseEntity<Error>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else {
-            return new ResponseEntity<Error>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
     @GetMapping("/getListTypeProduct")

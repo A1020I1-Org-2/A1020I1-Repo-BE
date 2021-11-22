@@ -80,9 +80,7 @@ public class ContractServiceImpl implements ContractService {
         if (contract == null){
             return false;
         }else {
-            StatusContract statusContract = new StatusContract(3,"Close");
-            contract.setStatusContract(statusContract);
-            System.out.println(contract.getStatusContract().getName());
+            contract.setStatusContract(new StatusContract(3,"Close"));
             contractRepository.save(contract);
             return true;
         }

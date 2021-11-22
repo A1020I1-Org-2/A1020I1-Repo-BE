@@ -14,7 +14,7 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
            value = "select * from contract c inner join type_product  on" +
                    " c.type_product_id = type_product.type_product_id " +
                    "where (c.product_name like %:product_name% or c.product_name is null)" +
-                   " and (c.receive_money like %:receive_money% or :receive_money is null )" +
+                   "and (c.receive_money like %:receive_money% or :receive_money is null )" +
                    "and (type_product.name like %:name% or type_product.name is null)"+
                    "and c.status_contract_id = 2",nativeQuery= true
     )
