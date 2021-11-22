@@ -16,5 +16,8 @@ public interface CustomerService {
 
     Optional<Customer> findById(String customerId);
 
-    Page<Customer> searchCustomer(String customerId, Date dateOfBirthForm, Date dateOfBirthTo, String address, String name, Pageable pageable);
+    Page<Customer> searchCustomer(Date dateOfBirthForm, Date dateOfBirthTo, String address, String name, Pageable pageable);
+
+//    Page<Customer> searchCustomer(String address, String name, Pageable pageable);
+
 }
