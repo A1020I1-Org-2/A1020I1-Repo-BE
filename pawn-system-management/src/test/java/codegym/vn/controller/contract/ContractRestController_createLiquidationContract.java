@@ -30,7 +30,7 @@ public class ContractRestController_createLiquidationContract {
     private ObjectMapper objectMapper;
 
     @Test
-     void createLiquidationContract_13() throws Exception {
+    void createLiquidationContract_13() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("null");
         contractDto.setCustomerId("null");
@@ -57,7 +57,7 @@ public class ContractRestController_createLiquidationContract {
     }
 
     @Test
-     void createLiquidationContract_14() throws Exception {
+    void createLiquidationContract_14() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("");
         contractDto.setCustomerId("");
@@ -85,7 +85,7 @@ public class ContractRestController_createLiquidationContract {
     }
 
     @Test
-     void createLiquidationContract_15() throws Exception {
+    void createLiquidationContract_15() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("");
         contractDto.setCustomerId("001");
@@ -168,9 +168,8 @@ public class ContractRestController_createLiquidationContract {
                 .andExpect(status().is4xxClientError());
     }
 
-
     @Test
-     void createLiquidationContract_18() throws Exception {
+    void createLiquidationContract_18() throws Exception {
         ContractDto contractDto = new ContractDto();
         contractDto.setContractId("HD-0001");
         contractDto.setCustomerId("KH-0003");
@@ -194,9 +193,9 @@ public class ContractRestController_createLiquidationContract {
         Date date2 = formatter.parse("31/09/2021");
         contractDto.setLiquidationDate(date2);
 
-        contractDto.setStatusContract(new StatusContract(1,"open"));
-        contractDto.setTypeContract(new TypeContract(1,"Thanh lý"));
-        contractDto.setTypeProduct(new TypeProduct(1,"Điện thoại"));
+        contractDto.setStatusContract(new StatusContract(1, "open"));
+        contractDto.setTypeContract(new TypeContract(1, "Thanh lý"));
+        contractDto.setTypeProduct(new TypeProduct(1, "Điện thoại"));
         this.mockMvc
                 .perform(
                         MockMvcRequestBuilders

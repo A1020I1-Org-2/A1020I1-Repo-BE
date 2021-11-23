@@ -23,7 +23,7 @@ public class CustomerController {
         if (customerList == null || customerList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Page<Customer>>(customerList,HttpStatus.OK);
+        return new ResponseEntity<>(customerList,HttpStatus.OK);
     }
 
     @GetMapping(value = "/searchCustomer")
@@ -31,8 +31,8 @@ public class CustomerController {
                                                           @PageableDefault(value = 5) Pageable pageable){
         Page<Customer> customers = customerService.searchCustomer(searchValue,pageable);
         if(customers.isEmpty()){
-            return new ResponseEntity<Page<Customer>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Page<Customer>>(customers,HttpStatus.OK);
+        return new ResponseEntity<>(customers,HttpStatus.OK);
     }
 }

@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -33,22 +30,11 @@ public class ContractServiceImpl implements ContractService {
         return contractRepository.getLiquidationProductList(pageable);
     }
 
-//    @Override
-//    public Contract findByContractId(String contractId) {
-//        return contractRepository.findById(contractId).orElse(null);
-//    }
-
-
     @Override
     public void saveLiquidationContract(ContractDto contractDto) {
-//        Contract contractFindById = contractRepository.getById(contractDto.getContractId());
         Customer customer = customerRepository.getById(contractDto.getCustomerId());
         Employee employee = employeeRepository.getById(contractDto.getEmployeeId());
-
-
-
-
-        Contract contract = new Contract (
+        Contract contract = new Contract(
                 contractDto.getContractId(),
                 contractDto.getProductImg(),
                 contractDto.getProductName(),
@@ -71,16 +57,16 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public Page<Contract> searchLiquidationProduct(
             String productName, String typeProduct, Integer receiveMoney, Pageable pageable) {
-        return contractRepository.searchLiquidationProduct(productName,receiveMoney,typeProduct,pageable);
+        return contractRepository.searchLiquidationProduct(productName, receiveMoney, typeProduct, pageable);
     }
 
     @Override
     public boolean updateStatusContractPawn(String contractID) {
         Contract contract = contractRepository.findById(contractID).orElse(null);
-        if (contract == null){
+        if (contract == null) {
             return false;
-        }else {
-            contract.setStatusContract(new StatusContract(3,"Close"));
+        } else {
+            contract.setStatusContract(new StatusContract(3, "Close"));
             contractRepository.save(contract);
             return true;
         }

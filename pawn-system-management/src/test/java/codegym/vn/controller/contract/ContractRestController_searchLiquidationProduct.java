@@ -54,7 +54,7 @@ public class ContractRestController_searchLiquidationProduct {
     @Test
     void searchLiquidationProduct_11() {
         ResponseEntity<Page<Contract>> responseEntity
-                = this.contractController.searchLiquidationProduct("Iphone",0,"",
+                = this.contractController.searchLiquidationProduct("Iphone","500","",
                 PageRequest.of(0,2));
 
         Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
@@ -64,7 +64,7 @@ public class ContractRestController_searchLiquidationProduct {
     @Test
      void searchLiquidationProduct_111() {
         ResponseEntity<Page<Contract>> responseEntity
-                = this.contractController.searchLiquidationProduct("Iphone",500,"",
+                = this.contractController.searchLiquidationProduct("Iphone","500","",
                 PageRequest.of(0,2));
 
         Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
@@ -74,7 +74,7 @@ public class ContractRestController_searchLiquidationProduct {
     @Test
     void searchLiquidationProduct_1112() {
         ResponseEntity<Page<Contract>> responseEntity
-                = this.contractController.searchLiquidationProduct("Iphone",500,
+                = this.contractController.searchLiquidationProduct("Iphone","500",
                 "Điện thoại", PageRequest.of(0,2));
 
         Assertions.assertEquals(200, responseEntity.getStatusCodeValue());

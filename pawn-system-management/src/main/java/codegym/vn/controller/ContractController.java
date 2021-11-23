@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.*;
 import java.util.List;
 
 @CrossOrigin("http://localhost:4200")
@@ -33,7 +32,7 @@ public class ContractController {
         System.out.println(contractDto);
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }else {
+        } else {
             this.contractService.saveLiquidationContract(contractDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -45,41 +44,43 @@ public class ContractController {
         if (contractList == null || contractList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Page<Contract>>(contractList,HttpStatus.OK);
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
     }
 
     @GetMapping("/search-liquidation-product")
     public ResponseEntity<Page<Contract>> searchLiquidationProduct(@RequestParam("product_name") String productName,
-                                                                   @RequestParam(value = "receive_money",defaultValue = "0") String receiveMoney,
+                                                                   @RequestParam(value = "receive_money",
+                                                                           defaultValue = "0") String receiveMoney,
                                                                    @RequestParam("name") String typeProductName,
                                                                    @PageableDefault(size = 5) Pageable pageable) {
         int temp = 0;
         try {
             temp = Integer.parseInt(receiveMoney);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             temp = 0;
         }
         Page<Contract> contractPage = this.contractService.searchLiquidationProduct(productName, typeProductName,
-                                                                                    temp == 0?null:temp, pageable);
-        if (contractPage.isEmpty()){
+                temp == 0 ? null : temp, pageable);
+        if (contractPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(contractPage,HttpStatus.OK);
+        return new ResponseEntity<>(contractPage, HttpStatus.OK);
     }
 
     @GetMapping("/update-status-contract")
-    public ResponseEntity<Contract> updateStatusContractPawn(@RequestParam(value = "contractID") String contractID ){
+    public ResponseEntity<Contract> updateStatusContractPawn(@RequestParam(value = "contractID") String contractID) {
         contractService.updateStatusContractPawn(contractID);
         if (contractService.updateStatusContractPawn(contractID)) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
     @GetMapping("/getListTypeProduct")
-    public ResponseEntity<List<TypeProduct>> findAll(){
+    public ResponseEntity<List<TypeProduct>> findAll() {
         List<TypeProduct> list = typeProductRepository.findAll();
         System.out.println(list);
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

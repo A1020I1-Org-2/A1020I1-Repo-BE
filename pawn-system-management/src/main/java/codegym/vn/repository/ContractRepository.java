@@ -1,8 +1,6 @@
 package codegym.vn.repository;
 
 import codegym.vn.entity.Contract;
-import codegym.vn.entity.Customer;
-import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

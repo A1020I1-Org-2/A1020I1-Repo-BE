@@ -23,7 +23,7 @@ public class EmployeeController {
         if (employeePage == null || employeePage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Page<Employee>>(employeePage,HttpStatus.OK);
+        return new ResponseEntity<>(employeePage,HttpStatus.OK);
     }
 
     @GetMapping(value = "/searchEmployee")
@@ -31,8 +31,8 @@ public class EmployeeController {
                                                          @PageableDefault(value = 5) Pageable pageable){
         Page<Employee> employees = employeeService.searchEmployee(searchValue,pageable);
         if(employees.isEmpty()){
-            return new ResponseEntity<Page<Employee>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Page<Employee>>(employees,HttpStatus.OK);
+        return new ResponseEntity<>(employees,HttpStatus.OK);
     }
 }
