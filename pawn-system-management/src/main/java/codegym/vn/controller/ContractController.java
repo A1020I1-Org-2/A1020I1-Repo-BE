@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ import java.util.List;
 @RequestMapping(value = "/contract")
 @CrossOrigin("http://localhost:4200")
 public class ContractController {
-    
+
     @Autowired
     private ContractService contractService;
     @Autowired
@@ -84,15 +85,15 @@ public class ContractController {
         Date searchStartDate;
         Date searchEndDate;
         if(startDateFrom.equals("")) {
-            searchStartDate = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-1900");
+            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
         }else {
-            searchStartDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateFrom);
+            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateFrom);
         }
 
         if(endDateTo.equals("")) {
-            searchEndDate = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-3000");
+            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse("3000-01-20");
         }else {
-            searchEndDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateTo);
+            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateTo);
         }
 
         Page<Contract> contractList = contractService.searchContract(customer,productName, statusContract, typeContract,
@@ -136,7 +137,7 @@ public class ContractController {
         }
         return new ResponseEntity<>(typeProducts, HttpStatus.OK);
     }
-        @GetMapping("/listTop10/search")
+    @GetMapping("/listTop10/search")
     public ResponseEntity<List<Contract>> contractSearch(@RequestParam("key") String name){
 
         List<Contract> contracts = this.contractService.contractListTop10Search(name);
@@ -164,32 +165,6 @@ public class ContractController {
         }
         return new ResponseEntity<>(contract,HttpStatus.OK);
     }
-
-
-    @PostMapping(value = "/createPawn")
-    public ResponseEntity<List<Error>> createPawn(@RequestBody ContractDTO contractDTO){
-        if (contractDTO == null){
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-        try {
-            contractService.createPawnContract(contractDTO);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
-
-    @GetMapping(value = "/searchCustomer")
-    public ResponseEntity<Page<Customer>> searchCustomer(@PageableDefault(value = 5) Pageable pageable,
-                                                         @RequestParam(defaultValue = "") String searchValue){
-        Page<Customer> customers = contractService.searchCustomer(searchValue,pageable);
-        if(customers == null){
-            return new ResponseEntity<Page<Customer>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Page<Customer>>(customers,HttpStatus.OK);
-    }
-
 
     @PostMapping("/create-liquidation-contract")
     public ResponseEntity<Contract> createLiquidationContract(@Valid @RequestBody ContractDto contractDto,

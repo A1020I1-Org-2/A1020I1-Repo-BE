@@ -1,18 +1,13 @@
 package codegym.vn.service;
 
 import codegym.vn.dto.ContractDto;
-import codegym.vn.entity.Contract;
-import codegym.vn.entity.Customer;
-import codegym.vn.entity.Employee;
+import codegym.vn.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.mail.MessagingException;
 
 import codegym.vn.dto.EditContract;
-import codegym.vn.entity.StatusContract;
-import codegym.vn.entity.TypeContract;
-import codegym.vn.entity.TypeProduct;
 
 import java.util.Date;
 import java.util.List;
@@ -36,11 +31,11 @@ public interface ContractService {
     void createPawnContract(ContractDTO contract) throws MessagingException;
 
     Page<Customer> searchCustomer(String searchValue,Pageable pageable);
-  Page<Contract> getLiquidationProductList(Pageable pageable);
+    Page<Contract> getLiquidationProductList(Pageable pageable);
 
     void saveLiquidationContract(ContractDto contractDto);
 
     Page<Contract> searchLiquidationProduct(String productName, String typeProduct, Integer receiveMoney, Pageable pageable);
-  boolean updateStatusContractPawn(String contractID);
+    boolean updateStatusContractPawn(String contractID);
 
 }

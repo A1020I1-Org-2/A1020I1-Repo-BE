@@ -22,6 +22,11 @@ public class StatusContract {
     public StatusContract() {
     }
 
+    public StatusContract(Integer statusContractId, String name) {
+        this.statusContractId = statusContractId;
+        this.name = name;
+    }
+
     public int getStatusContractId() {
         return statusContractId;
     }
