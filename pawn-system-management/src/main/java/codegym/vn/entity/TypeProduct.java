@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ public class TypeProduct {
     @Id
     private int typeProductId;
     private String name;
+
 
     @OneToMany(mappedBy = "typeContract")
     @JsonIgnore

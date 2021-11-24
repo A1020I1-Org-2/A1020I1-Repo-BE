@@ -1,8 +1,22 @@
 package codegym.vn.controller;
 
-import codegym.vn.dto.ContractDto;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import codegym.vn.dto.EditContract;
 import codegym.vn.entity.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+
+import codegym.vn.dto.ContractDto;
+import codegym.vn.entity.Contract;
+
+import codegym.vn.entity.Customer;
+import codegym.vn.entity.Employee;
+import codegym.vn.entity.TypeProduct;
 import codegym.vn.repository.TypeProductRepository;
+
 import codegym.vn.service.ContractService;
 import codegym.vn.service.CustomerService;
 import codegym.vn.service.EmployeeService;
@@ -19,16 +33,138 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200")
+
 @RestController
 @RequestMapping(value = "/contract")
+@CrossOrigin("http://localhost:4200")
 public class ContractController {
+
     @Autowired
     private ContractService contractService;
     @Autowired
     private TypeProductRepository typeProductRepository;
+
+    @GetMapping("/listContract")
+    public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 6) Pageable pageable){
+        Page<Contract> contractList = this.contractService.getContractList(pageable);
+        if(contractList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
+    }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Contract> findContractById(@PathVariable String id){
+        Contract contract = this.contractService.findById(id);
+        if(contract == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contract, HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Contract> deleteContract(@PathVariable String id){
+        Contract contract = contractService.findById(id);
+        if (contract == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        contractService.contractDelete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Contract>> searchContract(@RequestParam("customer") String customer,
+                                                         @RequestParam("productName") String productName,
+                                                         @RequestParam("statusContract") String statusContract,
+                                                         @RequestParam("typeContract") String typeContract,
+                                                         @RequestParam("startDateFrom") String startDateFrom,
+                                                         @RequestParam("endDateTo") String endDateTo,
+                                                         @PageableDefault(size = 6) Pageable pageable) throws ParseException {
+
+        Date searchStartDate;
+        Date searchEndDate;
+        if(startDateFrom.equals("")) {
+            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse("1900-01-01");
+        }else {
+            searchStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateFrom);
+        }
+
+        if(endDateTo.equals("")) {
+            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse("3000-01-20");
+        }else {
+            searchEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateTo);
+        }
+
+        Page<Contract> contractList = contractService.searchContract(customer,productName, statusContract, typeContract,
+                searchStartDate, searchEndDate, pageable);
+        if(contractList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/listTop10")
+    public ResponseEntity<List<Contract>> contractListTop10(){
+        List<Contract> contracts = this.contractService.contractListTop10();
+        if (contracts == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(contracts,HttpStatus.OK);
+    }
+    @GetMapping("/listTypeContract")
+    public ResponseEntity<List<TypeContract>> listTypeContract(){
+        List<TypeContract> typeContracts = this.contractService.getAllTypeContract();
+        if (typeContracts == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(typeContracts,HttpStatus.OK);
+    }
+    @GetMapping("/listStatusContract")
+    public ResponseEntity<List<StatusContract>> listStatusContract() {
+        List<StatusContract> statusContracts = this.contractService.getAllStatus();
+        if (statusContracts == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(statusContracts, HttpStatus.OK);
+    }
+    @GetMapping("/listTypeProduct")
+    public ResponseEntity<List<TypeProduct>> listTypeProduct() {
+        List<TypeProduct> typeProducts = this.contractService.getAllTypeProduct();
+        if (typeProducts == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(typeProducts, HttpStatus.OK);
+    }
+    @GetMapping("/listTop10/search")
+    public ResponseEntity<List<Contract>> contractSearch(@RequestParam("key") String name){
+
+        List<Contract> contracts = this.contractService.contractListTop10Search(name);
+        if (contracts.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contracts, HttpStatus.OK);
+    }
+    @PutMapping("/edit")
+    public ResponseEntity<Contract> contractUpdate(@Validated @RequestBody EditContract editContract, BindingResult bindingResult){
+
+
+        if (!bindingResult.hasFieldErrors() && editContract.getContractID() != null){
+            this.contractService.contractUpdate(editContract);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+    @GetMapping("/info/{id}")
+    public ResponseEntity<Contract> contractDetail(@PathVariable String id){
+        Contract contract = this.contractService.findById(id);
+        if (contract==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contract,HttpStatus.OK);
+    }
 
     @PostMapping("/create-liquidation-contract")
     public ResponseEntity<Contract> createLiquidationContract(@Valid @RequestBody ContractDto contractDto,
