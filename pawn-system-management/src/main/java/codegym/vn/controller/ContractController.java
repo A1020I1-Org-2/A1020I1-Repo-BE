@@ -60,13 +60,13 @@ public class ContractController {
 
         List<Contract> contracts = this.contractService.contractListTop10Search(name);
         if (contracts.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(contracts, HttpStatus.OK);
     }
     @PutMapping("/edit")
     public ResponseEntity<Contract> contractUpdate(@Validated @RequestBody EditContract editContract, BindingResult bindingResult){
-
+        System.out.println();
 
         if (!bindingResult.hasFieldErrors() && editContract.getContractID() != null){
             this.contractService.contractUpdate(editContract);

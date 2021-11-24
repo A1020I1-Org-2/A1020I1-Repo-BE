@@ -63,10 +63,14 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<Contract> contractListTop10Search(String name) {
+        System.out.println();
         Date date = null;
         try {
             date = new SimpleDateFormat("dd/MM/yyyy").parse(name);
-            return this.contractRepository.findAllByStartDate(date);
+            Date date1 = (Date)date.clone();
+            date.setHours(0);
+            date1.setHours(23);
+            return this.contractRepository.findAllByStartDate(date, date1);
         } catch (ParseException e) {
             return this.contractRepository.searchListTop10(name);
         }
