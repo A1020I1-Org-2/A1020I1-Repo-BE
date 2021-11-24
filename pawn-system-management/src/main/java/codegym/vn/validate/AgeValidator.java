@@ -18,7 +18,7 @@ public class AgeValidator implements ConstraintValidator<CheckAge, String> {
         if (dateOfBirth == null){
             return false;
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date birthday;
         try {
              birthday = format.parse(dateOfBirth);

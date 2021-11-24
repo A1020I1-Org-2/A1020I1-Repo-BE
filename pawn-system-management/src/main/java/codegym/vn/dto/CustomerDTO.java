@@ -8,28 +8,26 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 @Entity
 public class CustomerDTO {
     @Id
     private String customerId;
     @NotBlank(message = "Name can't be blank.")
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Name can't contain symbols.")
+    @Pattern(regexp = "^[a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$", message = "Name can't contain symbols.")
     private String name;
     @CheckAge
     private String dateOfBirth;
     @Email(message = "Email must follow format abc@abc.com")
     private String email;
     @NotBlank(message = "Address can't be blank.")
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Address can't contain symbols.")
+    @Pattern(regexp = "^[a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$", message = "Address can't contain symbols.")
     private String address;
-    @Pattern(regexp = "^(\\d{10}|\\d{12})$",
-            message = "Phone number must contain 9 or 12 digits.")
+    @Pattern(regexp = "^(\\d{10,12})$",
+            message = "Phone number must contain 10 - 12 digits.")
     private String phone;
-    @NotEmpty(message = "Image can't empty")
     private boolean gender;
-    @Pattern(regexp = "^(\\d{11})$",
-            message = "Id card number must contain 11 digits.")
+    @Pattern(regexp = "^(\\d{9,11})$",
+            message = "Id card number must contain 9 - 11 digits.")
     private String idCard;
     @NotEmpty(message = "Image can't empty")
     private String img;
@@ -37,7 +35,7 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
-    public CustomerDTO(String customerId, String dateOfBirth, String email,  String address,
+    public CustomerDTO(String customerId, String name, String dateOfBirth, String email,  String address,
             String phone, boolean gender, String idCard, String img) {
         this.customerId = customerId;
         this.name = name;

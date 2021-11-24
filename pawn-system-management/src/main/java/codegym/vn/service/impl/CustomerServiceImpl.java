@@ -30,9 +30,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void save(CustomerDTO customerDTO) {
         Customer customer = new Customer();
-        customer.setCustomerId(customerDTO.getCustomerId());
+        if (customerRepository.findById(customerDTO.getCustomerId())!=null){
+            customer.setCustomerId(customerDTO.getCustomerId());
+        }else {
+            return;
+        }
         customer.setName(customerDTO.getName());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date birthday;
         try {
             birthday = format.parse(customerDTO.getDateOfBirth());

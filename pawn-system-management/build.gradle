@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.sonarqube" version "3.0"
 }
 
 group = 'codegym.vn'
@@ -11,6 +12,8 @@ sourceCompatibility = '1.8'
 repositories {
     mavenCentral()
 }
+
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -25,6 +28,15 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.4'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     implementation group: 'org.json', name: 'json', version: '20190722'
+}
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://18.119.10.96:9000'
+        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
+        property 'sonar.projectKey', 'A1020I1_ReviewCode_DatNT'
+        property 'sonar.projectName', 'A1020I1_ReviewCode_DatNT'
+    }
 }
 
 test {

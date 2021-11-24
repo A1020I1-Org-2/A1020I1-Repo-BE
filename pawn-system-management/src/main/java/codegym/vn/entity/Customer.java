@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -18,7 +20,7 @@ public class Customer {
     private boolean gender;
     private String idCard;
     private String img;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
 
