@@ -1,10 +1,7 @@
 package codegym.vn.controller;
 
 import codegym.vn.dto.ContractDto;
-import codegym.vn.entity.Contract;
-import codegym.vn.entity.Customer;
-import codegym.vn.entity.Employee;
-import codegym.vn.entity.TypeProduct;
+import codegym.vn.entity.*;
 import codegym.vn.repository.TypeProductRepository;
 import codegym.vn.service.ContractService;
 import codegym.vn.service.CustomerService;

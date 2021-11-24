@@ -1,5 +1,6 @@
 package codegym.vn.service.impl;
 
+import codegym.vn.dto.ContractDto;
 import codegym.vn.entity.Contract;
 import codegym.vn.entity.ContractDTO;
 import codegym.vn.entity.Customer;

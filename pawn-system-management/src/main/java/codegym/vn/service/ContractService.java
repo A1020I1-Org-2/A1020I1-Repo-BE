@@ -2,8 +2,8 @@ package codegym.vn.service;
 
 import codegym.vn.dto.ContractDto;
 import codegym.vn.entity.Contract;
+import codegym.vn.entity.ContractDTO;
 import codegym.vn.entity.Customer;
-import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
