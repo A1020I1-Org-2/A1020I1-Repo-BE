@@ -2,8 +2,13 @@ package codegym.vn.service;
 
 import codegym.vn.dto.ContractDto;
 import codegym.vn.entity.Contract;
+import codegym.vn.entity.Customer;
+import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import javax.mail.MessagingException;
+
 
 public interface ContractService {
     Page<Contract> getLiquidationProductList(Pageable pageable);
@@ -14,5 +19,9 @@ public interface ContractService {
             String productName, String typeProduct, Integer receiveMoney, Pageable pageable);
 
     boolean updateStatusContractPawn(String contractID);
+    void createPawnContract(ContractDTO contract) throws MessagingException;
+
+    Page<Customer> searchCustomer(String searchValue,Pageable pageable);
+
 
 }
