@@ -13,6 +13,7 @@ public interface CustomerService {
     List<Customer> getCustomerList();
   
     Page<Customer> getCustomerList(Pageable pageable);
+
     Page<Customer> searchCustomer(String searchValue, Pageable pageable);
 
 }

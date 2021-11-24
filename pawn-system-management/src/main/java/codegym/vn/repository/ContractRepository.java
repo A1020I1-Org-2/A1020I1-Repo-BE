@@ -1,7 +1,6 @@
 package codegym.vn.repository;
 
 import codegym.vn.entity.Contract;
-
 import codegym.vn.entity.Customer;
 import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
@@ -59,8 +58,9 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
            value = "select * from contract c inner join type_product  on" +
                    " c.type_product_id = type_product.type_product_id " +
                    "where (c.product_name like %:product_name% or c.product_name is null)" +
-                   " and (c.receive_money = :receive_money or c.receive_money is null )" +
-                   "and (type_product.name like %:name% or type_product.name is null)",nativeQuery= true
+                   "and (c.receive_money like %:receive_money% or :receive_money is null )" +
+                   "and (type_product.name like %:name% or type_product.name is null)"+
+                   "and c.status_contract_id = 2",nativeQuery= true
     )
     Page<Contract> searchLiquidationProduct(@Param("product_name") String productName,
                                             @Param("receive_money") Integer receiveMoney,

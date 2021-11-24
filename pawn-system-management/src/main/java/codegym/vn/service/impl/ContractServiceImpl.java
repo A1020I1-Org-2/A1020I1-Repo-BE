@@ -10,6 +10,7 @@ import codegym.vn.entity.Contract;
 import codegym.vn.entity.ContractDTO;
 import codegym.vn.entity.Customer;
 import codegym.vn.entity.Employee;
+import codegym.vn.entity.StatusContract;
 import codegym.vn.repository.ContractRepository;
 import codegym.vn.repository.CustomerRepository;
 import codegym.vn.repository.EmployeeRepository;
@@ -213,13 +214,11 @@ public class ContractServiceImpl implements ContractService {
         return contractRepository.getLiquidationProductList(pageable);
     }
 
-
     @Override
     public void saveLiquidationContract(ContractDto contractDto) {
         Customer customer = customerRepository.getById(contractDto.getCustomerId());
         Employee employee = employeeRepository.getById(contractDto.getEmployeeId());
-
-        Contract contract = new Contract (
+        Contract contract = new Contract(
                 contractDto.getContractId(),
                 contractDto.getProductImg(),
                 contractDto.getProductName(),
@@ -242,7 +241,19 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public Page<Contract> searchLiquidationProduct(
             String productName, String typeProduct, Integer receiveMoney, Pageable pageable) {
-        return contractRepository.searchLiquidationProduct(productName,receiveMoney,typeProduct,pageable);
+        return contractRepository.searchLiquidationProduct(productName, receiveMoney, typeProduct, pageable);
+    }
+
+    @Override
+    public boolean updateStatusContractPawn(String contractID) {
+        Contract contract = contractRepository.findById(contractID).orElse(null);
+        if (contract == null) {
+            return false;
+        } else {
+            contract.setStatusContract(new StatusContract(3, "Close"));
+            contractRepository.save(contract);
+            return true;
+        }
     }
 
 }
