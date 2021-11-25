@@ -33,9 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> searchCustomer(String customerId, Date dateOfBirthForm, Date dateOfBirthTo, String address, String name, Pageable pageable) {
-        return customerRepository.searchCustomer(customerId, dateOfBirthForm, dateOfBirthTo, address, name, pageable);
+    public Page<Customer> searchCustomer(Date dateOfBirthForm, Date dateOfBirthTo, String address, String name, Pageable pageable) {
+        return customerRepository.searchCustomer(dateOfBirthForm, dateOfBirthTo, address, name, pageable);
     }
-
-
 }

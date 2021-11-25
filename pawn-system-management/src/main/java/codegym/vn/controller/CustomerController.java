@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -48,13 +50,26 @@ public class CustomerController {
     }
 
     @GetMapping("/searchCustomer")
-    public ResponseEntity<Page<Customer>> getSearchCustomer(@PageableDefault(size = 5) Pageable pageable,
-                                                            @RequestParam String customerId,
-                                                            @RequestParam Date dateOfBirthFrom,
-                                                            @RequestParam Date dateOfBirthTo,
-                                                            @RequestParam String address,
-                                                            @RequestParam String name) {
-        Page<Customer> customers = customerService.searchCustomer(customerId, dateOfBirthFrom,dateOfBirthTo, address, name, pageable);
+    public ResponseEntity<Page<Customer>> getSearchCustomer(@RequestParam("dateOfBirthFrom") String dateOfBirthFrom,
+                                                            @RequestParam("dateOfBirthTo") String dateOfBirthTo,
+                                                            @RequestParam("address") String address,
+                                                            @RequestParam("name") String name,
+                                                            @PageableDefault(size = 5) Pageable pageable) throws ParseException {
+        Date searchDateFrom;
+        Date searchDateTo;
+        if(dateOfBirthFrom.equals("")) {
+            searchDateFrom = new SimpleDateFormat("yyyy-MM-dd").parse("1900-1-1");
+        }else {
+            searchDateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirthFrom);
+        }
+
+        if(dateOfBirthTo.equals("")) {
+            searchDateTo = new SimpleDateFormat("yyyy-MM-dd").parse("2500-1-1");
+        }else {
+            searchDateTo = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirthTo);
+        }
+
+        Page<Customer> customers = customerService.searchCustomer(searchDateFrom, searchDateTo, address, name, pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
