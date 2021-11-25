@@ -32,12 +32,12 @@ public class RegisterPawnServiceImpl implements RegisterPawnService {
     @Override
     public void createNewRegister(RegisterRequest registerRequest) {
         RegisterPawn registerPawn = new RegisterPawn();
-        registerPawn.setPawnType(pawnTypeRepository.findById(registerRequest.getPawTypeId()).orElse(null));
-        registerPawn.setName(registerRequest.getName());
+        registerPawn.setPawnType(pawnTypeRepository.findById(registerRequest.getPawnTypeId()).orElse(null));
+        registerPawn.setName(registerRequest.getName().trim());
         registerPawn.setPhone(registerRequest.getPhone());
-        registerPawn.setEmail(registerRequest.getEmail());
-        registerPawn.setAddress(registerRequest.getAddress());
-        registerPawn.setNote(registerRequest.getNote());
+        registerPawn.setEmail(registerRequest.getEmail().trim());
+        registerPawn.setAddress(registerRequest.getAddress().trim());
+        registerPawn.setNote(registerRequest.getNote().trim());
         registerPawnRepository.save(registerPawn);
     }
 }

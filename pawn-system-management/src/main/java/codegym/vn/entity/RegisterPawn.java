@@ -1,8 +1,11 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "register_pawn")
 public class RegisterPawn {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,8 +16,9 @@ public class RegisterPawn {
     private String phone;
     private String note;
 
-    @ManyToOne(targetEntity = PawnType.class)
-    @JoinColumn(name = "pawn_type_id", referencedColumnName = "pawnTypeId")
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "pawn_type_id")
     private PawnType pawnType;
 
     public RegisterPawn() {

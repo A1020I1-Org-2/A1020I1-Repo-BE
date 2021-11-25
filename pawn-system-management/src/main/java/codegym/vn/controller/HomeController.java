@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping(value = {"/home", "/"})
+@RequestMapping(value = {"/home", ""})
 public class HomeController {
 
     private final RegisterPawnService registerPawnService;
@@ -29,7 +29,7 @@ public class HomeController {
         this.registerPawnService = registerPawnService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<RegisterPawn> createRegister(@Validated @RequestBody RegisterRequest registerRequest,
                                                        BindingResult bindingResult){
         if (!bindingResult.hasErrors()){
@@ -41,7 +41,7 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping("/types")
     public List<PawnType> getPawnTypes(){
         return registerPawnService.getAllPawnTypes();
     }
