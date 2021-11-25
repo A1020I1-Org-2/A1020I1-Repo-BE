@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -11,6 +13,7 @@ public class StatusContract {
     private Integer statusContractId;
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "statusContract")
     private Set<Contract> contracts;
 
