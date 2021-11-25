@@ -20,9 +20,4 @@ public class AccountServiceImpl implements AccountService {
     public Account save(Account account) {
         return this.repository.save(account);
     }
-
-    @Override
-    public Account findByUserNameAndPassword(String username, String password) {
-        return this.repository.findByUserNameAndPassword(username, password);
-    }
 }

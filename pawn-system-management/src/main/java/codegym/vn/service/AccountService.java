@@ -7,6 +7,4 @@ public interface AccountService {
     Account findById(String userName);
 
     Account save(Account account);
-
-    Account findByUserNameAndPassword(String username, String password);
 }
