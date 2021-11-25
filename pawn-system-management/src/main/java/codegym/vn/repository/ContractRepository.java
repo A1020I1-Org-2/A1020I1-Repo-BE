@@ -43,7 +43,11 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
             "or c.productName like %:key% or cus.name like %:key%  or t.name like %:key% or s.name like %:key%")
     List<Contract> searchListTop10(@Param("key") String name);
 
-    List<Contract> findAllByStartDate(Date date);
+    @Query( "select c\n" +
+            "from Contract c\n" +
+            " where c.startDate between :date and :date1")
+    List<Contract> findAllByStartDate(@Param("date") Date date, @Param("date1") Date date1);
+
 
 
     List<Contract> findTop10ByOrderByStartDateDesc();
