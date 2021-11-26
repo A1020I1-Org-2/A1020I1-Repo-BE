@@ -1,15 +1,11 @@
-package codegym.vn.entity;
+package codegym.vn.dto;
 
-import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
-@Entity
-public class Employee {
-    @Id
+public class EmployeeDto {
     private String employeeId;
     private String fullName;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String email;
     private String address;
     private String phone;
@@ -18,13 +14,21 @@ public class Employee {
     private String idCard;
     private String img;
 
-    @OneToMany(mappedBy = "employee")
-    private Set<Contract> contracts;
+    public EmployeeDto() {
+    }
 
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
-    private Account account;
-
-    public Employee() {
+    public EmployeeDto(String employeeId, String fullName, String dateOfBirth, String email, String address,
+                       String phone, boolean gender, Integer salary, String idCard, String img) {
+        this.employeeId = employeeId;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.gender = gender;
+        this.salary = salary;
+        this.idCard = idCard;
+        this.img = img;
     }
 
     public String getEmployeeId() {
@@ -43,11 +47,11 @@ public class Employee {
         this.fullName = fullName;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -97,22 +101,6 @@ public class Employee {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
-    }
-
-    public Set<Contract> getContracts() {
-        return contracts;
-    }
-
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public String getImg() {

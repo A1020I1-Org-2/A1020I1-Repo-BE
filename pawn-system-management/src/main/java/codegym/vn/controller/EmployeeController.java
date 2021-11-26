@@ -1,5 +1,7 @@
 package codegym.vn.controller;
 
+import codegym.vn.dto.EmployeeDto;
+import codegym.vn.dto.ListEmployeeResponse;
 import codegym.vn.entity.Employee;
 import codegym.vn.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("http://localhost:4200")
@@ -23,12 +26,20 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @GetMapping(value = {"/", "/list"})
-    public ResponseEntity<Page<Employee>> findAllEmp(@PageableDefault(size = 6) Pageable pageable) {
+    public ResponseEntity<ListEmployeeResponse> findAllEmp(@PageableDefault(size = 6) Pageable pageable) {
         Page<Employee> listEmp = this.employeeService.findAll(pageable);
-        if (listEmp.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<EmployeeDto> list = new ArrayList<>();
+        for (Employee employee : listEmp.getContent()){
+            list.add(new EmployeeDto(employee.getEmployeeId(), employee.getFullName(),
+                    employee.getDateOfBirth().toString(), employee.getEmail(), employee.getAddress(),
+                    employee.getPhone(), employee.isGender(), employee.getSalary(), employee.getIdCard(),
+                    employee.getImg()));
         }
-        return new ResponseEntity<>(listEmp, HttpStatus.OK);
+//        Page<EmployeeDto> list = listEmp.co
+        if (listEmp.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(new ListEmployeeResponse(list, listEmp.getTotalPages()), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -74,12 +85,15 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/viewEmployee/{id}")
-    public ResponseEntity<Employee> detailEmployee(@PathVariable String id) {
+    public ResponseEntity<EmployeeDto> detailEmployee(@PathVariable String id) {
         Employee employeeObj = this.employeeService.findById(id);
         if (employeeObj == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(employeeObj, HttpStatus.OK);
+        return new ResponseEntity<>(new EmployeeDto(employeeObj.getEmployeeId(), employeeObj.getFullName(),
+                employeeObj.getDateOfBirth().toString(), employeeObj.getEmail(), employeeObj.getAddress(),
+                employeeObj.getPhone(), employeeObj.isGender(), employeeObj.getSalary(), employeeObj.getIdCard(),
+                employeeObj.getImg()), HttpStatus.OK);
     }
 
 }
