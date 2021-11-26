@@ -13,7 +13,7 @@ public class Employee {
     private String email;
     private String address;
     private String phone;
-    private boolean gender;
+    private String gender;
     private Integer salary;
     private String idCard;
     private String img;
@@ -75,11 +75,11 @@ public class Employee {
         this.phone = phone;
     }
 
-    public boolean isGender() {
+    public String isGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

@@ -1,14 +1,11 @@
 package codegym.vn.controller;
 
 import codegym.vn.entity.Employee;
-import codegym.vn.service.AccountService;
-import codegym.vn.service.ContractService;
 import codegym.vn.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,10 +21,6 @@ import java.util.List;
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
-//    @Autowired
-//    AccountService accountService;
-//    @Autowired
-//    ContractService contractService;
 
     @GetMapping(value = {"/", "/list"})
     public ResponseEntity<Page<Employee>> findAllEmp(@PageableDefault(size = 6) Pageable pageable) {
@@ -38,7 +31,7 @@ public class EmployeeController {
         return new ResponseEntity<>(listEmp, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Employee> deleteEmp(@PathVariable String id) {
         Employee empId = this.employeeService.findById(id);
         if (empId == null) {
@@ -64,6 +57,7 @@ public class EmployeeController {
                     HttpStatus.NOT_ACCEPTABLE);
         }
         this.employeeService.createEmp(employee);
+        System.out.println(employee);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
