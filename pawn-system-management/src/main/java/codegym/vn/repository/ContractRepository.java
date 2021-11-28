@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, String> {
 
@@ -75,4 +74,9 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
     )
     Page<Contract> getLiquidationProductList(Pageable pageable);
 
+    @Query("select c from Contract  c " +
+            "join TypeProduct t on t.typeProductId= c.typeProduct.typeProductId " +
+            "where (c.productName like %:search%) and (t.name like %:typeSearch%)")
+    Page<Contract> searchPawn(@Param("search") String search,
+                              @Param("typeSearch") String typeSearch, Pageable pageable);
 }

@@ -58,6 +58,11 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
+    public Page<Contract> getAllPawn(Pageable pageable) {
+        return contractRepository.findAll(pageable);
+    }
+
+    @Override
     public Page<Contract> searchContract(String customer, String productName, String statusContract, String typeContract,
                                          Date startDateFrom, Date endDateTo, Pageable pageable) {
         return contractRepository.searchContractTest(customer, productName, statusContract, typeContract, startDateFrom, endDateTo, pageable);
@@ -250,5 +255,13 @@ public class ContractServiceImpl implements ContractService {
             contractRepository.save(contract);
             return true;
         }
+    }
+    public Contract findPawnById(String id) {
+        return contractRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Contract> searchPawn(String search, String typeSearch, Pageable pageable) {
+        return contractRepository.searchPawn(search,typeSearch,pageable);
     }
 }

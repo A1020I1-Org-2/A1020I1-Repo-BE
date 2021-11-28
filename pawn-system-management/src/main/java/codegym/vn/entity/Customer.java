@@ -22,7 +22,6 @@ public class Customer {
     private String idCard;
     private String img;
 
-
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Contract> contracts;

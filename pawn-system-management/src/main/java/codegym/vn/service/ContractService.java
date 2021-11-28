@@ -11,6 +11,10 @@ import codegym.vn.dto.EditContract;
 import java.util.Date;
 import java.util.List;
 
+import codegym.vn.entity.Contract;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface ContractService {
     List<Contract> findAll();
     Page<Contract> getContractList(Pageable pageable);
@@ -37,4 +41,9 @@ public interface ContractService {
     Page<Contract> searchLiquidationProduct(String productName, String typeProduct, Integer receiveMoney, Pageable pageable);
     boolean updateStatusContractPawn(String contractID);
 
+    Page<Contract> getAllPawn(Pageable pageable);
+
+    Contract findPawnById(String id);
+
+    Page<Contract> searchPawn(String search, String typeSearch, Pageable pageable);
 }

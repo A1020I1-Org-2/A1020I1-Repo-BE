@@ -16,7 +16,7 @@ public class ContractDto implements Validator {
     private String productName;
     private Integer interestMoney;
     @NotNull(message = "Tổng tiền không để trống!")
-    @Max(value = 9999999,message = "Chiều dài kí tự nhỏ hơn 9 ")
+//    @Max(value = 9999999,message = "Chiều dài kí tự nhỏ hơn 9 ")
     private Integer receiveMoney;
     private Integer loanMoney;
     @NotNull(message = "Ngày thanh lý không để trống!")

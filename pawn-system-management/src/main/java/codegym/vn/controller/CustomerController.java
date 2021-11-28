@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/list-customer")
-    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(size = 6) Pageable pageable) {
+    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(size = 2) Pageable pageable) {
         Page<Customer> customers = customerService.findAll(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -41,6 +42,15 @@ public class CustomerController {
     @GetMapping("/getCustomerList")
     public ResponseEntity<Page<Customer>> getCustomerList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Customer> customerList = this.customerService.getCustomerList(pageable);
+        if (customerList == null || customerList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customerList,HttpStatus.OK);
+    }
+
+    @GetMapping("/get-all-customer")
+    public ResponseEntity<List<Customer>> getCustomerList() {
+        List<Customer> customerList = this.customerService.getCustomerList();
         if (customerList == null || customerList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -70,7 +80,8 @@ public class CustomerController {
                                                             @RequestParam("dateOfBirthTo") String dateOfBirthTo,
                                                             @RequestParam("address") String address,
                                                             @RequestParam("name") String name,
-                                                            @PageableDefault(size = 6) Pageable pageable) throws ParseException {
+                                                            @PageableDefault(size = 2) Pageable pageable) throws ParseException {
+        System.out.println();
         Date searchDateFrom;
         Date searchDateTo;
         if (dateOfBirthFrom.equals("")) {

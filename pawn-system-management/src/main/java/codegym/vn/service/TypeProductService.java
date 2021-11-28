@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TypeProductService {
     List<TypeProduct> getTypeProductList();
+    List<TypeProduct> getAll();
 }
