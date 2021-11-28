@@ -5,16 +5,6 @@ plugins {
     id "org.sonarqube" version "3.0"
 }
 
-sonarqube {
-    properties {
-        property 'sonar.host.url', 'http://18.119.10.96:9000'
-        property 'sonar.login',
-                'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
-        property 'sonar.projectKey', 'A1020I1_ReviewCode_CuongHN'
-        property 'sonar.projectName', 'A1020I1_ReviewCode_CuongHN'
-    }
-}
-
 group = 'codegym.vn'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -33,7 +23,7 @@ sonarqube {
 }
 
 dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'

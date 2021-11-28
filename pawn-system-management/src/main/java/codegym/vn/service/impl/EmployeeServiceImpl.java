@@ -15,7 +15,8 @@ import java.text.SimpleDateFormat;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+
     @Override
     public boolean createEmp(EmployeeDto employee) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,5 +68,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteAll() {
         this.employeeRepository.deleteAll();
+    }
+
+    @Override
+    public Page<Employee> getEmployeeList(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Employee> searchEmployee(String searchValue, Pageable pageable) {
+        return employeeRepository.searchEmployee(searchValue,pageable);
     }
 }

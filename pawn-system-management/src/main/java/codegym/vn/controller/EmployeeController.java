@@ -1,5 +1,6 @@
 package codegym.vn.controller;
 
+
 import codegym.vn.dto.EmployeeDto;
 import codegym.vn.dto.ListEmployeeResponse;
 import codegym.vn.entity.Employee;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping(value = "/employee")
 public class EmployeeController {
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @GetMapping(value = {"/", "/list"})
     public ResponseEntity<ListEmployeeResponse> findAllEmp(@PageableDefault(size = 6) Pageable pageable) {
@@ -110,8 +111,27 @@ public class EmployeeController {
     }
 
     @DeleteMapping(value = "/delete-all")
-    public ResponseEntity<?> deleteAll(){
+    public ResponseEntity<?> deleteAll() {
         this.employeeService.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/getEmployeeList")
+    public ResponseEntity<Page<Employee>> getEmployeeList(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Employee> employeePage = this.employeeService.getEmployeeList(pageable);
+        if (employeePage == null || employeePage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employeePage,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/searchEmployee")
+    public ResponseEntity<Page<Employee>> searchEmployee(@RequestParam(defaultValue = "") String searchValue,
+                                                         @PageableDefault(value = 5) Pageable pageable){
+        Page<Employee> employees = employeeService.searchEmployee(searchValue,pageable);
+        if(employees.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employees,HttpStatus.OK);
     }
 }

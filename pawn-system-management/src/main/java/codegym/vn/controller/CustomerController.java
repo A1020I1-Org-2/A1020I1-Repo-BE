@@ -17,6 +17,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping(value = "/customer")
@@ -24,13 +29,22 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/listCustomer")
+    @GetMapping("/list-customer")
     public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(size = 6) Pageable pageable) {
         Page<Customer> customers = customerService.findAll(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customers, HttpStatus.OK);
+    }
+
+    @GetMapping("/getCustomerList")
+    public ResponseEntity<Page<Customer>> getCustomerList(@PageableDefault(size = 5) Pageable pageable) {
+        Page<Customer> customerList = this.customerService.getCustomerList(pageable);
+        if (customerList == null || customerList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customerList,HttpStatus.OK);
     }
 
     @GetMapping("/getCustomer/{customerId}")
@@ -51,7 +65,7 @@ public class CustomerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/searchCustomer")
+    @GetMapping("/search-customer")
     public ResponseEntity<Page<Customer>> getSearchCustomer(@RequestParam("dateOfBirthFrom") String dateOfBirthFrom,
                                                             @RequestParam("dateOfBirthTo") String dateOfBirthTo,
                                                             @RequestParam("address") String address,
@@ -78,9 +92,18 @@ public class CustomerController {
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/searchCustomer")
+    public ResponseEntity<Page<Customer>> searchCustomer( @RequestParam(defaultValue = "") String searchValue,
+                                                          @PageableDefault(value = 5) Pageable pageable){
+        Page<Customer> customers = customerService.searchCustomer(searchValue,pageable);
+        if(customers.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customers,HttpStatus.OK);
+    }
+
     @PostMapping(value = "/create")
     public ResponseEntity<Void> createCustomer(@Validated @RequestBody CustomerDTO customerDTO, BindingResult bindingResult){
-        System.out.println();
         if (!bindingResult.hasErrors()) {
             customerService.save(customerDTO);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -97,12 +120,10 @@ public class CustomerController {
             if (customerService.findById(customerDTO.getCustomerId()) != null) {
                 customerService.save(customerDTO);
                 return new ResponseEntity<>(HttpStatus.OK);
-            }
-            else {
+            } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-        }
-        else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

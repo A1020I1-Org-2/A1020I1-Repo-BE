@@ -16,4 +16,7 @@ public interface EmployeeService {
     Page<Employee> searchByName(String key, Pageable pageable);
     boolean updateEmp(EmployeeDto employeeDto);
     void deleteAll();
+    Page<Employee> getEmployeeList(Pageable pageable);
+    Page<Employee> searchEmployee(String searchValue, Pageable pageable);
+
 }

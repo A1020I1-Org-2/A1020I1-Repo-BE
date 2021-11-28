@@ -1,6 +1,7 @@
 package codegym.vn.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,21 +11,21 @@ import java.util.Set;
 @Entity
 public class TypeProduct {
     @Id
-    private Integer typeProductId;
+    private int typeProductId;
     private String name;
 
-    @JsonBackReference
     @OneToMany(mappedBy = "typeContract")
+    @JsonIgnore
     private Set<Contract> contracts;
 
     public TypeProduct() {
     }
 
-    public Integer getTypeProductId() {
+    public int getTypeProductId() {
         return typeProductId;
     }
 
-    public void setTypeProductId(Integer typeProductId) {
+    public void setTypeProductId(int typeProductId) {
         this.typeProductId = typeProductId;
     }
 

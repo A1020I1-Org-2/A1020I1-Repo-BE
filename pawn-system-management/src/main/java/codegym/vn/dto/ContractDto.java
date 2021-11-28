@@ -1,66 +1,49 @@
-package codegym.vn.entity;
+package codegym.vn.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import codegym.vn.entity.*;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-@Entity
-public class Contract implements Validator {
-    @Id
+public class ContractDto implements Validator {
+    @Pattern(regexp = "^HD-[0-9]{4}$",message = "Mời nhập đúng định dạng HD-XXXX với X là số từ 0-9")
     private String contractId;
     private String productImg;
     private String productName;
     private Integer interestMoney;
+    @NotNull(message = "Tổng tiền không để trống!")
+    @Max(value = 9999999,message = "Chiều dài kí tự nhỏ hơn 9 ")
     private Integer receiveMoney;
     private Integer loanMoney;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày thanh lý không để trống!")
     private Date liquidationDate;
     private Date startDate;
     private Date endDate;
     private Integer quantity;
-
-    @JsonManagedReference
-    @ManyToOne(targetEntity = StatusContract.class)
-    @JoinColumn(name = "status_contract_id", referencedColumnName = "statusContractId")
     private StatusContract statusContract;
-
-    @JsonManagedReference
-    @ManyToOne(targetEntity = TypeProduct.class)
-    @JoinColumn(name = "type_product_id", referencedColumnName = "typeProductId")
-    private TypeProduct typeProduct;
-
-    @JsonManagedReference
-    @ManyToOne(targetEntity = TypeContract.class)
-    @JoinColumn(name = "type_contract_id", referencedColumnName = "typeContractId")
+    @NotBlank(message = "Khách hàng không được để trống!")
+    private String customerId;
     private TypeContract typeContract;
+    private TypeProduct typeProduct;
+    private String employeeId;
 
-    @JsonManagedReference
-    @ManyToOne(targetEntity = Employee.class)
-    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
-    private Employee employee;
-
-    @JsonManagedReference
-    @ManyToOne(targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
-    private Customer customer;
-
-    public Contract() {
+    public ContractDto() {
     }
 
-
-    public Contract(String contractId, String productImg, String productName, Integer interestMoney,
-                    Integer receiveMoney, Integer loanMoney, Date liquidationDate, Date startDate,
-                    Date endDate, Integer quantity, StatusContract statusContract, TypeProduct typeProduct,
-                    TypeContract typeContract, Employee employee, Customer customer) {
+    public ContractDto(@Pattern(regexp = "^HD-[0-9]{4}$",
+            message = "Mời nhập đúng định dạng HD-XXXX với X là số từ 0-9")
+                               String contractId, String productImg, String productName,
+                       Integer interestMoney, @NotNull(message = "Tổng tiền không để trống!")
+                       @Max(value = 9999999, message = "Chiều dài kí tự nhỏ hơn 9 ")
+                               Integer receiveMoney, Integer loanMoney, Date liquidationDate,
+                       @NotNull(message = "Ngày thanh lý không để trống!") Date startDate,
+                       Date endDate, Integer quantity, StatusContract statusContract,
+                       @NotBlank(message = "Khách hàng không được để trống!") String customerId,
+                       TypeContract typeContract, TypeProduct typeProduct, String employeeId) {
         this.contractId = contractId;
         this.productImg = productImg;
         this.productName = productName;
@@ -72,11 +55,13 @@ public class Contract implements Validator {
         this.endDate = endDate;
         this.quantity = quantity;
         this.statusContract = statusContract;
-        this.typeProduct = typeProduct;
+        this.customerId = customerId;
         this.typeContract = typeContract;
-        this.employee = employee;
-        this.customer = customer;
+        this.typeProduct = typeProduct;
+        this.employeeId = employeeId;
     }
+
+
 
     public String getContractId() {
         return contractId;
@@ -166,12 +151,12 @@ public class Contract implements Validator {
         this.statusContract = statusContract;
     }
 
-    public TypeProduct getTypeProduct() {
-        return typeProduct;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setTypeProduct(TypeProduct typeProduct) {
-        this.typeProduct = typeProduct;
+    public void setCustomerId(String  customerId) {
+        this.customerId = customerId;
     }
 
     public TypeContract getTypeContract() {
@@ -182,20 +167,20 @@ public class Contract implements Validator {
         this.typeContract = typeContract;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public TypeProduct getTypeProduct() {
+        return typeProduct;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setTypeProduct(TypeProduct typeProduct) {
+        this.typeProduct = typeProduct;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override
@@ -205,6 +190,13 @@ public class Contract implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        ContractDto contractDto = (ContractDto) target;
+        Date dateNow = new Date();
+        long diff = (dateNow.getTime()- contractDto.getLiquidationDate().getTime())/(1000*60*60*24);
+        if (diff !=0){
+            errors.rejectValue("liquidationDate","liquidationDate.noMulti",
+                    "Ngày thanh lý phải là ngày hiện tại!");
+        }
 
     }
 }

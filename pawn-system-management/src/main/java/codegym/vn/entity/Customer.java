@@ -1,8 +1,6 @@
 package codegym.vn.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
@@ -24,8 +22,9 @@ public class Customer {
     private String idCard;
     private String img;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Contract> contracts;
 
     public Customer() {

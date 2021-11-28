@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -60,4 +61,20 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setImg(customerDTO.getImg());
         customerRepository.save(customer);
     }
+
+    @Override
+    public List<Customer> getCustomerList() {
+        return customerRepository.findAll();
+    }
+
+    @Override
+    public Page<Customer> getCustomerList(Pageable pageable) {
+        return customerRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Customer> searchCustomer(String searchValue, Pageable pageable) {
+        return customerRepository.searchCustomer(searchValue, pageable);
+    }
+
 }

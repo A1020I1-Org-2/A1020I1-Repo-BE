@@ -14,5 +14,15 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             "where (cus.dateOfBirth between :dateOfBirthFrom and :dataOfBirthTo) \n" +
             "and (cus.address like %:address%) \n" +
             "and (cus.name like %:name%)")
-    Page<Customer> searchCustomer(@Param("dateOfBirthFrom") Date dateOfBirthFrom,@Param("dataOfBirthTo") Date dataOfBirthTo,@Param("address") String address,@Param("name") String name, Pageable pageable);
+    Page<Customer> searchCustomer(@Param("dateOfBirthFrom") Date dateOfBirthFrom,
+                                  @Param("dataOfBirthTo") Date dataOfBirthTo,
+                                  @Param("address") String address,
+                                  @Param("name") String name, Pageable pageable);
+
+    @Query(value = "select cs from Customer cs where " +
+                    "cs.customerId like %:searchValue% " +
+                    "or cs.name like %:searchValue%  or " +
+                    "cs.idCard like %:searchValue%"
+    )
+    Page<Customer> searchCustomer(@Param("searchValue") String searchValue, Pageable pageable);
 }
