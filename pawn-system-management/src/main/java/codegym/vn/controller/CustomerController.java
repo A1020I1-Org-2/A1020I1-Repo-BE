@@ -31,7 +31,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/list-customer")
-    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(size = 2) Pageable pageable) {
+    public ResponseEntity<Page<Customer>> getListCustomer(@PageableDefault(size = 5) Pageable pageable) {
         Page<Customer> customers = customerService.findAll(pageable);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -80,7 +80,7 @@ public class CustomerController {
                                                             @RequestParam("dateOfBirthTo") String dateOfBirthTo,
                                                             @RequestParam("address") String address,
                                                             @RequestParam("name") String name,
-                                                            @PageableDefault(size = 2) Pageable pageable) throws ParseException {
+                                                            @PageableDefault(size = 5) Pageable pageable) throws ParseException {
         System.out.println();
         Date searchDateFrom;
         Date searchDateTo;

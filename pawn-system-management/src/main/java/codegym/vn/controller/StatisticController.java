@@ -23,16 +23,25 @@ public class StatisticController {
 
     @GetMapping("/statisticInterest")
     public ResponseEntity<List<Contract>> statisticInterest(
-            @RequestParam(value = "start", required = false)String start,
-            @RequestParam(value="end", required = false)String end) throws ParseException {
-        if(start==null || end==null ||start.equals("")||end.equals("")){
+            @RequestParam(value = "start", required = false, defaultValue = "")String start,
+            @RequestParam(value="end", required = false, defaultValue = "")String end){
+        System.out.println();
+        if(start.equals("")||end.equals("")){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Date startDate=new SimpleDateFormat("dd/MM/yyyy").parse(start);
-        Date endDate=new SimpleDateFormat("dd/MM/yyyy").parse(end);
-        List<Contract> contractList = statisticService.statisticInterest(startDate,endDate);
-        if (contractList.isEmpty())
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate;
+        Date endDate;
+        try{
+            startDate=format.parse(start);
+            endDate=format.parse(end);
+        }catch(ParseException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Contract> contractList = statisticService.statisticInterest(startDate,endDate);
+        if (contractList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(contractList, HttpStatus.OK);
     }
 
