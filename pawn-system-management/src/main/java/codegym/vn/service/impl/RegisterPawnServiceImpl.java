@@ -26,7 +26,7 @@ public class RegisterPawnServiceImpl implements RegisterPawnService {
 
     @Override
     public List<PawnType> getAllPawnTypes() {
-        return new ArrayList<>(pawnTypeRepository.findAll());
+        return pawnTypeRepository.findAll();
     }
 
     @Override

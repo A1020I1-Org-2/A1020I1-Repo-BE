@@ -55,20 +55,29 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
     List<Contract> findContractOutOfDate(Date CURDate);
 
 
-    @Query(
-           value = "select * from contract c inner join type_product  on" +
-                   " c.type_product_id = type_product.type_product_id " +
-                   "where (c.product_name like %:product_name% or c.product_name is null)" +
-                   "and (c.receive_money like %:receive_money% or :receive_money is null )" +
-                   "and (type_product.name like %:name% or type_product.name is null)"+
-                   "and c.status_contract_id = 2",nativeQuery= true
+//    @Query(
+//           value = "select * from contract c inner join type_product  on" +
+//                   " c.type_product_id = type_product.type_product_id " +
+//                   "where (c.product_name like %:product_name% or c.product_name is null)" +
+//                   "and (c.loan_money like %:loan_money% or :loan_money is null )" +
+//                   "and (type_product.name like %:name% or type_product.name is null)"+
+//                   "and c.status_contract_id = 2",nativeQuery= true
+//    )
+    @Query("select c from Contract c inner join TypeProduct tp on " +
+            "tp.typeProductId = c.typeProduct.typeProductId " +
+            "where " +
+            "(c.productName like %:product_name%) " +
+            "and (concat(c.loanMoney, '')  like %:loan_money% ) " +
+            "and (tp.name like %:name% ) " +
+            "and c.statusContract.statusContractId = 2"
     )
-    Page<Contract> searchLiquidationProduct(@Param("product_name") String productName,
-                                            @Param("receive_money") Integer receiveMoney,
-                                            @Param("name") String typeProductName,
-                                            Pageable pageable);
-    @Query(
-            value = "select ct from Contract ct inner join StatusContract sc on" +
+    Page<Contract> searchLiquidationProduct(
+            @Param("product_name") String productName,
+            @Param("loan_money") String loanMoney,
+            @Param("name") String typeProductName,
+            Pageable pageable);
+
+    @Query(value = "select ct from Contract ct inner join StatusContract sc on" +
                     " ct.statusContract.statusContractId = sc.statusContractId " +
                     "where sc.name = 'pending' "
     )
@@ -76,7 +85,12 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
 
     @Query("select c from Contract  c " +
             "join TypeProduct t on t.typeProductId= c.typeProduct.typeProductId " +
-            "where (c.productName like %:search%) and (t.name like %:typeSearch%)")
+            "join StatusContract st on st.statusContractId = c.statusContract.statusContractId " +
+            "where (c.productName like %:search%) and (t.name like %:typeSearch%) and (st.statusContractId <> 3)")
     Page<Contract> searchPawn(@Param("search") String search,
                               @Param("typeSearch") String typeSearch, Pageable pageable);
+
+    @Query("select c from Contract c inner join StatusContract st " +
+            "on st.statusContractId = c.statusContract.statusContractId where st.statusContractId <> 3")
+    Page<Contract> getItemWarehouse(Pageable pageable);
 }

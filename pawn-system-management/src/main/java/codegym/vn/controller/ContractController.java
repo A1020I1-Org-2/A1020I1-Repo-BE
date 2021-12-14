@@ -48,7 +48,7 @@ public class ContractController {
     private TypeProductRepository typeProductRepository;
 
     @GetMapping("/listContract")
-    public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 6) Pageable pageable){
+    public ResponseEntity<Page<Contract>> getAllContract(@PageableDefault(size = 5) Pageable pageable){
         Page<Contract> contractList = this.contractService.getContractList(pageable);
         if(contractList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -80,7 +80,7 @@ public class ContractController {
                                                          @RequestParam("typeContract") String typeContract,
                                                          @RequestParam("startDateFrom") String startDateFrom,
                                                          @RequestParam("endDateTo") String endDateTo,
-                                                         @PageableDefault(size = 6) Pageable pageable) throws ParseException {
+                                                         @PageableDefault(size = 5) Pageable pageable) throws ParseException {
 
         Date searchStartDate;
         Date searchEndDate;
@@ -170,7 +170,6 @@ public class ContractController {
     @PostMapping("/create-liquidation-contract")
     public ResponseEntity<Contract> createLiquidationContract(@Valid @RequestBody ContractDto contractDto,
                                                               BindingResult bindingResult) {
-        System.out.println(contractDto);
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }else {
@@ -189,19 +188,18 @@ public class ContractController {
     }
 
     @GetMapping("/search-liquidation-product")
-    public ResponseEntity<Page<Contract>> searchLiquidationProduct(@RequestParam("product_name") String productName,
-                                                                   @RequestParam(value = "receive_money",
-                                                                           defaultValue = "0") String receiveMoney,
-                                                                   @RequestParam("name") String typeProductName,
+    public ResponseEntity<Page<Contract>> searchLiquidationProduct(@RequestParam(value = "product_name") String productName,
+                                                                   @RequestParam(value = "receive_money") String money,
+                                                                   @RequestParam(value = "name") String typeProductName,
                                                                    @PageableDefault(size = 5) Pageable pageable) {
-        int temp = 0;
-        try {
-            temp = Integer.parseInt(receiveMoney);
-        } catch (NumberFormatException e) {
-            temp = 0;
-        }
+//        int temp = 0;
+//        try {
+//            temp = Integer.parseInt(money);
+//        } catch (NumberFormatException e) {
+//            temp = 0;
+//        }
         Page<Contract> contractPage = this.contractService.searchLiquidationProduct(productName, typeProductName,
-                temp == 0 ? null : temp, pageable);
+                money, pageable);
         if (contractPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

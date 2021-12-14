@@ -38,7 +38,7 @@ public interface ContractService {
 
     void saveLiquidationContract(ContractDto contractDto);
 
-    Page<Contract> searchLiquidationProduct(String productName, String typeProduct, Integer receiveMoney, Pageable pageable);
+    Page<Contract> searchLiquidationProduct(String productName, String typeProductName, String receiveMoney, Pageable pageable);
     boolean updateStatusContractPawn(String contractID);
 
     Page<Contract> getAllPawn(Pageable pageable);

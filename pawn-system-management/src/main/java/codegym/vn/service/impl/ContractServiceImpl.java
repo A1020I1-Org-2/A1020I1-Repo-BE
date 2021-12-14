@@ -59,12 +59,13 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Page<Contract> getAllPawn(Pageable pageable) {
-        return contractRepository.findAll(pageable);
+        return contractRepository.getItemWarehouse(pageable);
     }
 
     @Override
-    public Page<Contract> searchContract(String customer, String productName, String statusContract, String typeContract,
-                                         Date startDateFrom, Date endDateTo, Pageable pageable) {
+    public Page<Contract> searchContract(String customer, String productName, String statusContract,
+                                         String typeContract, Date startDateFrom, Date endDateTo,
+                                         Pageable pageable) {
         return contractRepository.searchContractTest(customer, productName, statusContract, typeContract, startDateFrom, endDateTo, pageable);
     }
 
@@ -227,8 +228,8 @@ public class ContractServiceImpl implements ContractService {
                 contractDto.getReceiveMoney(),
                 contractDto.getLoanMoney(),
                 contractDto.getLiquidationDate(),
-                contractDto.getStartDate(),
-                contractDto.getEndDate(),
+                new Date(),
+                new Date(),
                 contractDto.getQuantity(),
                 contractDto.getStatusContract(),
                 contractDto.getTypeProduct(),
@@ -241,8 +242,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Page<Contract> searchLiquidationProduct(
-            String productName, String typeProduct, Integer receiveMoney, Pageable pageable) {
-        return contractRepository.searchLiquidationProduct(productName, receiveMoney, typeProduct, pageable);
+            String productName, String typeProductName, String receiveMoney, Pageable pageable) {
+        return contractRepository.searchLiquidationProduct(productName, receiveMoney, typeProductName, pageable);
     }
 
     @Override
