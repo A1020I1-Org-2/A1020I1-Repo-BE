@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/employee")
@@ -35,4 +37,15 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(employees,HttpStatus.OK);
     }
+
+    // ThanhNHM
+    @GetMapping("/get-all-employee")
+    public ResponseEntity<List<Employee>> getAllEmployee(){
+        List<Employee> employees = this.employeeService.getAllEmployee();
+        if (employees == null || employees.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+    // ThanhNHM
 }
