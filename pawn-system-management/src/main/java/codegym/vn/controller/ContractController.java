@@ -249,4 +249,11 @@ public class ContractController {
         return new ResponseEntity<Page<Customer>>(customers,HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get-list-contract-open")
+    public ResponseEntity<Page<Contract>> getListContractOpen(@PageableDefault(value = 5) Pageable pageable,
+                                                              @RequestParam(value = "keyword",
+                                                                      defaultValue = "") String keyword){
+        Page<Contract> page = this.contractService.getListContractOpen(keyword, pageable);
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
 }

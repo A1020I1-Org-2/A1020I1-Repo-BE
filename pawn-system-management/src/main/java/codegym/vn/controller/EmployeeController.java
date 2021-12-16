@@ -134,4 +134,13 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(employees,HttpStatus.OK);
     }
+
+    @GetMapping(value = "/get-all-employee")
+    public ResponseEntity<List<Employee>> getAll(){
+        List<Employee> list = this.employeeService.getAll();
+        if(list.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

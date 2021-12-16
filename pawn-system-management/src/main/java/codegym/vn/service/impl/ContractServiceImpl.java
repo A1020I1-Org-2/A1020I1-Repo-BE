@@ -265,4 +265,9 @@ public class ContractServiceImpl implements ContractService {
     public Page<Contract> searchPawn(String search, String typeSearch, Pageable pageable) {
         return contractRepository.searchPawn(search,typeSearch,pageable);
     }
+
+    @Override
+    public Page<Contract> getListContractOpen(String keyword, Pageable pageable) {
+        return this.contractRepository.getListContractOpen(keyword, pageable);
+    }
 }

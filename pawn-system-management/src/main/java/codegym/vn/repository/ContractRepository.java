@@ -93,4 +93,12 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
     @Query("select c from Contract c inner join StatusContract st " +
             "on st.statusContractId = c.statusContract.statusContractId where st.statusContractId <> 3")
     Page<Contract> getItemWarehouse(Pageable pageable);
+
+    @Query("select c from Contract c " +
+            "inner join StatusContract st on c.statusContract.statusContractId = st.statusContractId " +
+            "inner join TypeContract tc on c.typeContract.typeContractId = tc.typeContractId " +
+            "inner join TypeProduct tp on c.typeProduct.typeProductId = tp.typeProductId " +
+            "where (c.productName like %:keyword%) " +
+            "and st.statusContractId = 1")
+    Page<Contract> getListContractOpen(@Param("keyword") String keyword, Pageable pageable);
 }

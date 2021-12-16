@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public interface EmployeeService {
@@ -18,5 +20,5 @@ public interface EmployeeService {
     void deleteAll();
     Page<Employee> getEmployeeList(Pageable pageable);
     Page<Employee> searchEmployee(String searchValue, Pageable pageable);
-
+    List<Employee> getAll();
 }
