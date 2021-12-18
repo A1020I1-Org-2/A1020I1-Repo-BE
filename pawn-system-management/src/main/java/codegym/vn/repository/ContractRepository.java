@@ -98,7 +98,10 @@ public interface ContractRepository extends JpaRepository<Contract, String> {
             "inner join StatusContract st on c.statusContract.statusContractId = st.statusContractId " +
             "inner join TypeContract tc on c.typeContract.typeContractId = tc.typeContractId " +
             "inner join TypeProduct tp on c.typeProduct.typeProductId = tp.typeProductId " +
-            "where (c.productName like %:keyword%) " +
+            "where ((c.productName like %:keyword%) " +
+            "or (c.contractId like %:keyword%) " +
+            "or (c.customer.name like %:keyword%) " +
+            "or (concat(c.loanMoney, '') like %:keyword%)) " +
             "and st.statusContractId = 1")
     Page<Contract> getListContractOpen(@Param("keyword") String keyword, Pageable pageable);
 }

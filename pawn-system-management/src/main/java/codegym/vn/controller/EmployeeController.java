@@ -3,7 +3,9 @@ package codegym.vn.controller;
 
 import codegym.vn.dto.EmployeeDto;
 import codegym.vn.dto.ListEmployeeResponse;
+import codegym.vn.entity.Account;
 import codegym.vn.entity.Employee;
+import codegym.vn.service.AccountService;
 import codegym.vn.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,11 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +26,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private AccountService accountService;
+
     @GetMapping(value = {"/", "/list"})
-    public ResponseEntity<ListEmployeeResponse> findAllEmp(@PageableDefault(size = 6) Pageable pageable) {
+    public ResponseEntity<ListEmployeeResponse> findAllEmp(@PageableDefault(size = 5) Pageable pageable) {
         Page<Employee> listEmp = this.employeeService.findAll(pageable);
         List<EmployeeDto> list = new ArrayList<>();
         for (Employee employee : listEmp.getContent()){
@@ -55,7 +58,7 @@ public class EmployeeController {
 
     @GetMapping(value = "/search")
     public ResponseEntity<ListEmployeeResponse> searchByKey(@RequestParam String key,
-                                                            @PageableDefault(value = 6) Pageable pageable){
+                                                            @PageableDefault(value = 5) Pageable pageable){
         Page<Employee> listEmp = employeeService.searchByName(key, pageable);
         List<EmployeeDto> list = new ArrayList<>();
         for (Employee employee : listEmp.getContent()){
@@ -142,5 +145,22 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/find-by-account")
+    public ResponseEntity<Employee> findByAccount(@RequestParam(value = "username") String username){
+        Employee employee = this.employeeService.findByAccount(username);
+        if(employee != null) {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(value = "/exist-id-card")
+    public ResponseEntity<?> existIdCard(@RequestParam(value = "idCard")String idCard){
+        if(this.employeeService.existIdCard(idCard)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

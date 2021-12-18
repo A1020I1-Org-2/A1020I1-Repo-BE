@@ -48,4 +48,6 @@ public interface ContractService {
     Page<Contract> searchPawn(String search, String typeSearch, Pageable pageable);
 
     Page<Contract> getListContractOpen(String keyword, Pageable pageable);
+
+    boolean paymentContract(ContractDTO contractDTO);
 }

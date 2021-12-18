@@ -108,7 +108,6 @@ public class ContractController {
     @GetMapping("/listTop10")
     public ResponseEntity<List<Contract>> contractListTop10(){
         List<Contract> contracts = this.contractService.contractListTop10();
-        System.out.println();
         if (contracts == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -220,7 +219,6 @@ public class ContractController {
     @GetMapping("/getListTypeProduct")
     public ResponseEntity<List<TypeProduct>> findAll() {
         List<TypeProduct> list = typeProductRepository.findAll();
-        System.out.println(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -255,5 +253,13 @@ public class ContractController {
                                                                       defaultValue = "") String keyword){
         Page<Contract> page = this.contractService.getListContractOpen(keyword, pageable);
         return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/payment-contract")
+    public ResponseEntity<?> paymentContract(@RequestBody ContractDTO contractDTO){
+        if(this.contractService.paymentContract(contractDTO)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 }

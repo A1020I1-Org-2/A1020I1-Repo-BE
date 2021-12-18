@@ -270,4 +270,16 @@ public class ContractServiceImpl implements ContractService {
     public Page<Contract> getListContractOpen(String keyword, Pageable pageable) {
         return this.contractRepository.getListContractOpen(keyword, pageable);
     }
+
+    @Override
+    public boolean paymentContract(ContractDTO contractDTO) {
+        Contract contract = this.contractRepository.findById(contractDTO.getContractId()).orElse(null);
+        if(contract == null){
+            return false;
+        }
+        contract.setReceiveMoney(contract.getInterestMoney());
+        contract.setLiquidationDate(contractDTO.getLiquidationDate());
+        this.contractRepository.save(contract);
+        return true;
+    }
 }

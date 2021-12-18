@@ -25,7 +25,7 @@ public class Employee {
     private Set<Contract> contracts;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
     private Account account;
 
     public Employee() {

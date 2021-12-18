@@ -1,6 +1,7 @@
 package codegym.vn.service;
 
 import codegym.vn.dto.EmployeeDto;
+import codegym.vn.entity.Account;
 import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,6 @@ public interface EmployeeService {
     Page<Employee> getEmployeeList(Pageable pageable);
     Page<Employee> searchEmployee(String searchValue, Pageable pageable);
     List<Employee> getAll();
+    Employee findByAccount(String username);
+    boolean existIdCard(String idCard);
 }

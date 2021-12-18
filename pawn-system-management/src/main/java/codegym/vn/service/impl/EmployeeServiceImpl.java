@@ -1,7 +1,9 @@
 package codegym.vn.service.impl;
 
 import codegym.vn.dto.EmployeeDto;
+import codegym.vn.entity.Account;
 import codegym.vn.entity.Employee;
+import codegym.vn.repository.AccountRepository;
 import codegym.vn.repository.EmployeeRepository;
 import codegym.vn.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Override
     public boolean createEmp(EmployeeDto employee) {
@@ -84,5 +89,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAll() {
         return this.employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee findByAccount(String username) {
+        return this.employeeRepository.findByAccount(username);
+    }
+
+    @Override
+    public boolean existIdCard(String idCard) {
+        return this.employeeRepository.existsByIdCard(idCard);
     }
 }

@@ -1,5 +1,7 @@
 package codegym.vn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class Account {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
+    @JsonIgnore
     private Employee employee;
 
     public Account() {

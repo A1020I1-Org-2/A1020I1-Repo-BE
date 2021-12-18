@@ -1,5 +1,6 @@
 package codegym.vn.repository;
 
+import codegym.vn.entity.Account;
 import codegym.vn.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     )
     Page<Employee> searchEmployee(@Param("searchValue") String searchValue, Pageable pageable);
 
+    @Query("select e from Employee e inner join Account c on c.userName = e.account.userName " +
+            "where c.userName = :username")
+    Employee findByAccount(@Param("username") String username);
+
+    boolean existsByIdCard(String idCard);
 }
