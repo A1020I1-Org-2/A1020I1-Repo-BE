@@ -89,7 +89,7 @@ public class EmployeeController {
 
     @PutMapping("/update-employee")
     public ResponseEntity<List<FieldError>> updateEmployee(@RequestBody EmployeeDto employee){
-        System.out.println();
+//        System.out.println();
 //        if (bindingResult.hasErrors()) {
 //            return new ResponseEntity<>(bindingResult.getFieldErrors(),
 //                    HttpStatus.NOT_ACCEPTABLE);

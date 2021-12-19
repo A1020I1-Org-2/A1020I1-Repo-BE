@@ -32,7 +32,7 @@ public class HomeController {
     @PostMapping("/create")
     public ResponseEntity<RegisterPawn> createRegister(@Validated @RequestBody RegisterRequest registerRequest,
                                                        BindingResult bindingResult){
-        System.out.println();
+//        System.out.println();
         if (!bindingResult.hasErrors()){
             registerPawnService.createNewRegister(registerRequest);
             return new ResponseEntity<>(HttpStatus.OK);

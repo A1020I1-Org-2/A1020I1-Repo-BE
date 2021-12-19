@@ -25,7 +25,7 @@ public class StatisticController {
     public ResponseEntity<List<Contract>> statisticInterest(
             @RequestParam(value = "start", required = false, defaultValue = "")String start,
             @RequestParam(value="end", required = false, defaultValue = "")String end){
-        System.out.println();
+//        System.out.println();
         if(start.equals("")||end.equals("")){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
