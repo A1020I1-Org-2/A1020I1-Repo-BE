@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping(value = {"/home", ""})
+@RequestMapping(value = {"/home"})
 public class HomeController {
 
     private final RegisterPawnService registerPawnService;

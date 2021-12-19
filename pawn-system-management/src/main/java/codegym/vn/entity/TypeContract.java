@@ -19,6 +19,11 @@ public class TypeContract {
     public TypeContract() {
     }
 
+    public TypeContract(int typeContractId, String name) {
+        this.typeContractId = typeContractId;
+        this.name = name;
+    }
+
     public int getTypeContractId() {
         return typeContractId;
     }

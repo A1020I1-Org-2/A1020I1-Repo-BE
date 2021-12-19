@@ -29,7 +29,7 @@ public class CustomerDTO {
     @Pattern(regexp = "^(\\d{9,11})$",
             message = "Id card number must contain 9 - 11 digits.")
     private String idCard;
-    @NotEmpty(message = "Image can't empty")
+//    @NotEmpty(message = "Image can't empty")
     private String img;
 
     public CustomerDTO() {

@@ -253,6 +253,7 @@ public class ContractServiceImpl implements ContractService {
             return false;
         } else {
             contract.setStatusContract(new StatusContract(3, "Close"));
+            contract.setTypeContract(new TypeContract(2, "Thanh Lý"));
             contractRepository.save(contract);
             return true;
         }
@@ -277,7 +278,7 @@ public class ContractServiceImpl implements ContractService {
         if(contract == null){
             return false;
         }
-        contract.setReceiveMoney(contract.getInterestMoney());
+        contract.setReceiveMoney(contract.getInterestMoney()+contract.getLoanMoney());
         contract.setLiquidationDate(contractDTO.getLiquidationDate());
         this.contractRepository.save(contract);
         return true;
